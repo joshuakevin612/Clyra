@@ -102,9 +102,13 @@ def patient_access(db, user, patient_id, write=False, allow_patient=True, metada
 
 def audit(db, user, action, target, patient_id=None, org_id=None, before=None, after=None, note=None):
     allowed = action.startswith(('USER_', 'ORGANISATION_', 'PATIENT_LOGIN_', 'LINK_', 'MIGRATION_'))
+    telemetry_counts = None
+    if action.startswith('TELEMETRY_') and isinstance(after, dict):
+        telemetry_counts = {k:v for k,v in after.items()
+                            if k in ('acceptedCount','duplicateCount') and type(v) is int and v >= 0}
     row = Audit(id=uid('aud'), org_id=org_id if org_id is not None else user.org_id, patient_id=patient_id,
         data=dict(actorId=user.id, actorRole=user.data['role'], action=action, targetId=target,
-                  occurredAt=stamp(), before=before if allowed else None, after=after if allowed else None,
+                  occurredAt=stamp(), before=before if allowed else None, after=after if allowed else telemetry_counts,
                   note=note if allowed else None))
     db.add(row)
     db.flush()

@@ -1,5 +1,7 @@
 # Member 2 backend
 
+TR-1.0 telemetry implementation and Member 1 integration guidance: [telemetry handoff](../contract/TELEMETRY_HANDOFF.md). Migration `0004` adds telemetry storage; apply it with the existing direct migration connection before running the new endpoints. The recorded Neon development revision below remains `0003` until that upgrade is performed. Run `.venv\Scripts\python -m scripts.export_telemetry_examples` to regenerate the eight shared examples; no database connection is required.
+
 The current contract is v1.3.1. For Neon, use a dedicated development branch and database. The setup tool retrieves credentials without printing them, creates a restricted SQL role, writes separate runtime/owner env files, and applies Alembic:
 
 ```powershell

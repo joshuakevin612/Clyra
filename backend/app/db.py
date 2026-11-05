@@ -81,6 +81,30 @@ class Attempt(Record, Base):
     __tablename__ = 'login_attempts'
     key: Mapped[str] = mapped_column(String(200), index=True)
 
+class TelemetrySession(Record, Base):
+    __tablename__ = 'telemetry_sessions'
+    patient_id: Mapped[str] = mapped_column(ForeignKey('patients.id'))
+    actor_id: Mapped[str] = mapped_column(ForeignKey('users.id'))
+    request_id: Mapped[str] = mapped_column(String(36))
+    started_at: Mapped[str] = mapped_column(String(40))
+    __table_args__ = (
+        Index('ix_telemetry_patient_started', 'patient_id', 'started_at', 'id'),
+        Index('uq_telemetry_creation', 'patient_id', 'actor_id', 'request_id', unique=True),
+    )
+
+class TelemetryObservation(Base):
+    __tablename__ = 'telemetry_observations'
+    id: Mapped[str] = mapped_column(String(100), primary_key=True)
+    session_id: Mapped[str] = mapped_column(ForeignKey('telemetry_sessions.id'))
+    event_id: Mapped[str] = mapped_column(String(36))
+    source_id: Mapped[str] = mapped_column(String(20))
+    measured_at: Mapped[str] = mapped_column(String(40))
+    data: Mapped[dict] = mapped_column(JSON)
+    __table_args__ = (
+        Index('uq_telemetry_event', 'session_id', 'event_id', unique=True),
+        Index('ix_telemetry_measurement', 'session_id', 'source_id', 'measured_at', 'id'),
+    )
+
 def make_engine(url=None):
     url = url or os.environ.get('DATABASE_URL')
     if not url:
