@@ -9,3 +9,17 @@ __pycache__/
 .env.*
 !.env.example
 !.env.migrations.example
+
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+backend-source/
+tmp/
+**/test-results/
+**/playwright-report/
+**/tsconfig.tsbuildinfo
+
+output/
+member2contracts/

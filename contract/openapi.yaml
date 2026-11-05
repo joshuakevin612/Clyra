@@ -1592,6 +1592,73 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorOutput'
           description: Internal Server Error
+    get:
+      summary: Read Patient Login
+      operationId: read_patient_login_api_v1_patients__patientId__login_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Patientid
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserOutput'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Conflict
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Internal Server Error
     patch:
       summary: Patch Login
       operationId: patch_login_api_v1_patients__patientId__login_patch

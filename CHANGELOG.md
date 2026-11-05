@@ -18,3 +18,15 @@
 - Created synthetic fixtures from its examples because reference fixture files were not supplied.
 - Implemented backend routes and proposed two additive discovery GET endpoints.
 - Recorded proposed conventions and unresolved interface gaps in contract/IMPLEMENTATION_NOTES.md. These are pending review by both members; no contract amendment has been approved.
+
+# Integration additions
+
+## 2026-11-05 â€” Patient login version discovery
+
+Added GET /api/v1/patients/{patientId}/login, CLINICIAN with FULL access only. Returns existing UserOutput metadata for the linked patient login, including its current version. Missing and inaccessible logins return NOT_FOUND. The read writes a PATIENT_LOGIN access event. This additive integration change enables the existing versioned disable/enable/password-reset endpoint without guessing versions. No existing endpoint or payload changed. Implemented under the project owner's instruction to integrate and make necessary changes; no separate Member 2 approval is claimed.
+
+Access-log action filters now match the resource field. Frontend date filters use explicit inclusive UTC day bounds. Source highlighting uses validated Unicode offsets, including repeated quotes.
+
+## Neon connection verification — 2026-11-05
+
+Recovered existing runtime and migration connections using the local management key, preserving roles and passwords. Connected the persistent app on local API port 8001, with frontend proxy selection through VITE_API_PROXY_TARGET. Verified TLS, runtime restrictions, append-only events, medication immutability, tenant isolation, patient notice, audit rollback, and signed-in browser reads for all four roles (platform password-change gate preserved). Secrets remain only in ignored local env files.

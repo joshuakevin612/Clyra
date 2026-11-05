@@ -254,7 +254,7 @@ def logs(request, db, u, cls, patient_id=None):
     for row in db.scalars(query):
         data = event_view(row, cls == Audit)
         params = request.query_params
-        if any(params.get(k) and data.get(k) != params[k] for k in ('orgId','actorId','action')):
+        if any(params.get(k) and (data.get(k) if k != 'action' else data.get('action', data.get('resource'))) != params[k] for k in ('orgId','actorId','action')):
             continue
         if params.get('from') and data['occurredAt'] < params['from']:
             continue
@@ -326,6 +326,15 @@ def patient_login(patientId: str, body: Account, u=Depends(current_user), db=Dep
     member = create_user(db,body,'PATIENT',p.org_id,p.id)
     update(p, {'linkedUserId': member.id})
     audit(db,u,'PATIENT_LOGIN_CREATED',member.id,p.id,after=user_view(member))
+    return user_view(member)
+
+@router.get('/patients/{patientId}/login', response_model=UserOutput, response_model_exclude_unset=True)
+def read_patient_login(patientId: str, u=Depends(current_user), db=Depends(db_session, scope='function')):
+    p = patient_access(db,u,patientId,write=True)
+    member = next((x for x in db.scalars(select(User)) if x.data.get('patientId') == p.id), None)
+    if not member:
+        fail('NOT_FOUND',404)
+    access(db,u,'PATIENT_LOGIN',member.id,p.id)
     return user_view(member)
 
 @router.patch('/patients/{patientId}/login', response_model=UserOutput, response_model_exclude_unset=True)

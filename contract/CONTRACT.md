@@ -264,3 +264,6 @@ The project owner authorized these implementation decisions on 2026-11-05. Share
 Runtime DATABASE_URL uses the restricted clyra_app role and a pooled SSL connection in backend/.env. MIGRATION_DATABASE_URL uses a direct owner connection in backend/.env.migrations, loaded only by Alembic. Both files and local development login files are gitignored. The runtime role cannot update, delete, truncate, or own event tables and has no privileged memberships. A database trigger also protects immutable medication content.
 
 
+## 12. Frontend integration addition
+
+GET /patients/{patientId}/login is available to CLINICIAN with FULL access, returning UserOutput metadata and its current version. It writes a PATIENT_LOGIN access event. Missing/inaccessible records return NOT_FOUND. This additive integration change is documented in CHANGELOG.md; it does not change existing endpoints.

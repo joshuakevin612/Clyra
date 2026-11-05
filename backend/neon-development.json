@@ -17,5 +17,15 @@
     "tenant isolation",
     "patient view",
     "audit rollback"
+  ],
+  "frontendConnected": true,
+  "localFrontendOrigin": "http://127.0.0.1:5177",
+  "localVerificationDate": "2026-11-05",
+  "localApiOrigin": "http://127.0.0.1:8001",
+  "signedInBrowserChecks": [
+    "CLINICIAN workspace and patient-login metadata",
+    "ADMIN account metadata",
+    "PATIENT view and notice",
+    "SUPER_ADMIN login and forced-password-change gate"
   ]
 }
