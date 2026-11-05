@@ -1,0 +1,146 @@
+{
+  "organisations": [
+    {
+      "id": "org_north",
+      "name": "Northside Clinic (synthetic)"
+    },
+    {
+      "id": "org_riverside",
+      "name": "Riverside Health (synthetic)"
+    }
+  ],
+  "patients": [
+    {
+      "id": "pat_001",
+      "displayName": "Alex Example",
+      "dateOfBirth": "1980-01-01",
+      "orgId": "org_north"
+    },
+    {
+      "id": "pat_002",
+      "displayName": "Morgan Sample",
+      "dateOfBirth": "1985-02-02",
+      "orgId": "org_riverside"
+    },
+    {
+      "id": "pat_003",
+      "displayName": "Jordan Test",
+      "dateOfBirth": "1990-03-03",
+      "orgId": "org_north"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr_admin_north",
+      "username": "admin.north",
+      "displayName": "Admin North (synthetic)",
+      "role": "ADMIN",
+      "orgId": "org_north",
+      "patientId": null
+    },
+    {
+      "id": "usr_dr_north",
+      "username": "dr.north",
+      "displayName": "Dr North (synthetic)",
+      "role": "CLINICIAN",
+      "orgId": "org_north",
+      "patientId": null
+    },
+    {
+      "id": "usr_admin_riverside",
+      "username": "admin.riverside",
+      "displayName": "Admin Riverside (synthetic)",
+      "role": "ADMIN",
+      "orgId": "org_riverside",
+      "patientId": null
+    },
+    {
+      "id": "usr_dr_riverside",
+      "username": "dr.riverside",
+      "displayName": "Dr Riverside (synthetic)",
+      "role": "CLINICIAN",
+      "orgId": "org_riverside",
+      "patientId": null
+    },
+    {
+      "id": "usr_alex",
+      "username": "alex.example",
+      "displayName": "Alex Example",
+      "role": "PATIENT",
+      "orgId": "org_north",
+      "patientId": "pat_001"
+    },
+    {
+      "id": "usr_sam",
+      "username": "sam.signup",
+      "displayName": "Sam Signup",
+      "role": "PATIENT",
+      "orgId": null,
+      "patientId": null
+    }
+  ],
+  "visits": [
+    {
+      "id": "vis_001a",
+      "patientId": "pat_001",
+      "orgId": "org_north",
+      "visitDate": "2026-01-01"
+    },
+    {
+      "id": "vis_001b",
+      "patientId": "pat_001",
+      "orgId": "org_north",
+      "visitDate": "2026-02-01"
+    },
+    {
+      "id": "vis_001c",
+      "patientId": "pat_001",
+      "orgId": "org_riverside",
+      "visitDate": "2026-03-01"
+    },
+    {
+      "id": "vis_002a",
+      "patientId": "pat_002",
+      "orgId": "org_riverside",
+      "visitDate": "2026-01-01"
+    },
+    {
+      "id": "vis_003a",
+      "patientId": "pat_003",
+      "orgId": "org_north",
+      "visitDate": "2026-01-01"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc_001a",
+      "patientId": "pat_001",
+      "orgId": "org_north",
+      "visitId": "vis_001a"
+    },
+    {
+      "id": "doc_001b",
+      "patientId": "pat_001",
+      "orgId": "org_north",
+      "visitId": "vis_001b"
+    },
+    {
+      "id": "doc_001c",
+      "patientId": "pat_001",
+      "orgId": "org_riverside",
+      "visitId": "vis_001c"
+    },
+    {
+      "id": "doc_002a",
+      "patientId": "pat_002",
+      "orgId": "org_riverside",
+      "visitId": "vis_002a"
+    },
+    {
+      "id": "doc_003a",
+      "patientId": "pat_003",
+      "orgId": "org_north",
+      "visitId": "vis_003a"
+    }
+  ]
+}

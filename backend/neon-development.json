@@ -1,0 +1,21 @@
+{
+  "projectId": "calm-dream-97416878",
+  "projectName": "my-first-project",
+  "branchId": "br-frosty-cloud-a1h9326y",
+  "branchName": "clyra-backend-dev",
+  "database": "clyra",
+  "region": "aws-ap-southeast-1",
+  "runtimeRole": "clyra_app",
+  "migrationRevision": "0003",
+  "verificationDate": "2026-11-05",
+  "verifiedChecks": [
+    "client TLS",
+    "runtime role permissions",
+    "append-only event tables",
+    "medication immutability",
+    "HTTP login",
+    "tenant isolation",
+    "patient view",
+    "audit rollback"
+  ]
+}

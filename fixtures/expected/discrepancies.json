@@ -1,0 +1,34 @@
+[
+  {
+    "type": "CONFLICT",
+    "field": "strength",
+    "medicineKey": "amlodipine",
+    "leftEntryId": "med_001a_0",
+    "rightEntryId": "med_001b_0",
+    "visitId": "vis_001b"
+  },
+  {
+    "type": "DUPLICATE",
+    "field": "medicine",
+    "medicineKey": "amlodipine",
+    "leftEntryId": "med_001b_0",
+    "rightEntryId": "med_001b_1",
+    "visitId": "vis_001b"
+  },
+  {
+    "type": "MISSING",
+    "field": "medicine",
+    "medicineKey": "atorvastatin",
+    "leftEntryId": "med_001a_1",
+    "rightEntryId": null,
+    "visitId": "vis_001b"
+  },
+  {
+    "type": "MISSING",
+    "field": "medicine",
+    "medicineKey": "amlodipine",
+    "leftEntryId": "med_001b_0",
+    "rightEntryId": null,
+    "visitId": "vis_001c"
+  }
+]

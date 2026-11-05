@@ -1,0 +1,8 @@
+SYN-RX-V1
+medicineName: Example medicine 5 mg
+strength: 5 MG
+form: TABLET
+instructionText: Synthetic source instruction.  Preserve exactly. 
+startDate: 2026-01-01
+endDate: null
+prescriberName: Synthetic Clinician

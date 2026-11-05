@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.db
+*.pyc
+.tools/
+.neon
+.env.*
+!.env.example
+!.env.migrations.example
