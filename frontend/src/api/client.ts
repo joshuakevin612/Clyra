@@ -1,12 +1,12 @@
 import type { ApiErrorBody, ErrorCode } from "./types";
 let token: string | null = null;
 let expiresAt = 0;
-export const mockMode =
-  !import.meta.env.VITE_API_BASE_URL ||
-  import.meta.env.VITE_API_BASE_URL === "mock";
+// Mock mode is opt-in only (VITE_API_BASE_URL=mock). An unset value uses the
+// same-origin real API; it never falls back to mocks implicitly.
+export const mockMode = import.meta.env.VITE_API_BASE_URL === "mock";
 const base = mockMode
   ? "/api/v1"
-  : import.meta.env.VITE_API_BASE_URL.replace(/\/$/, "");
+  : (import.meta.env.VITE_API_BASE_URL || "/api/v1").replace(/\/$/, "");
 export function setSession(value: string | null, expiry?: string) {
   token = value;
   expiresAt = expiry ? Date.parse(expiry) : 0;

@@ -54,8 +54,8 @@ export function ExperienceProvider({ children }: { children: ReactNode }) {
   }
   return <Context.Provider value={{ mode, effective, reduced, choose,
     toggle: () => choose(effective === "off" ? "cinematic" : "off"), configure: () => setOpen(true) }}>
-    <div className="easy-reading-bar"><span>Clyra · Your preferred experience</span><MotionControls /></div>
     {children}
+    <div className="easy-reading-bar"><span>Clyra · Your preferred experience</span><MotionControls /></div>
     <CursorFollower active={effective === "cinematic"} />
     <ExperienceChoice open={open} reduced={reduced} initial={mode} onChoose={choose} />
   </Context.Provider>;

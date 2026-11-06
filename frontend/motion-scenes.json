@@ -1,0 +1,92 @@
+{
+  "title": "Clyra traceability: headline, recession, evidence, signature",
+  "scenes": [
+    {
+      "name": "Hero",
+      "mode": "free",
+      "vh": 100,
+      "intensity": 2,
+      "handoff": null,
+      "lead": "A pointer-responsive, continuously rotating M\u00f6bius continuity ribbon leads the hero. Typography and actions remain DOM.",
+      "fallback": "Calm mode restores original sign-in; no custom cursor."
+    },
+    {
+      "name": "Problem",
+      "mode": "free",
+      "vh": 80,
+      "intensity": 2,
+      "handoff": "text-relay",
+      "lead": "Native-scroll horizontal word relay carries records into the product explanation.",
+      "fallback": "Static readable statement."
+    },
+    {
+      "name": "Headline",
+      "mode": "hold",
+      "vh": 64,
+      "intensity": 1,
+      "handoff": "text-relay",
+      "pin": "traceability",
+      "lead": "Every change. Still traceable. fills the frame; illustrations remain hidden.",
+      "fallback": "Static upright headline."
+    },
+    {
+      "name": "Recede",
+      "mode": "move",
+      "vh": 112,
+      "intensity": 3,
+      "handoff": "scale-through",
+      "pin": "traceability",
+      "lead": "Headline scales back and fades. Evidence arrival overlaps its final 10% of progress.",
+      "fallback": "Separate readable text and illustration."
+    },
+    {
+      "name": "Evidence",
+      "mode": "move",
+      "vh": 100,
+      "intensity": 3,
+      "handoff": "reveal",
+      "pin": "traceability",
+      "lead": "Linked cards zoom to their final upright composition.",
+      "fallback": "Static source/review composition."
+    },
+    {
+      "name": "Signature",
+      "mode": "move",
+      "vh": 76,
+      "intensity": 2,
+      "handoff": "hold-release",
+      "pin": "traceability",
+      "lead": "The mark draws only after the cards land.",
+      "fallback": "Complete static mark."
+    },
+    {
+      "name": "Release",
+      "mode": "hold",
+      "vh": 48,
+      "intensity": 1,
+      "handoff": "hold-release",
+      "pin": "traceability",
+      "lead": "Hold the completed evidence composition, then native scroll releases the stage.",
+      "fallback": "Native flow."
+    },
+    {
+      "name": "Explore",
+      "mode": "free",
+      "vh": 100,
+      "intensity": 2,
+      "handoff": "match-shape",
+      "lead": "Interactive Source/Findings/Summary illustration with explicit descriptions and tab semantics.",
+      "fallback": "Same readable controls, no motion."
+    },
+    {
+      "name": "Handover",
+      "mode": "free",
+      "vh": 100,
+      "intensity": 1,
+      "handoff": "hold-release",
+      "lead": "Large closing typography leads to the real sign-in form.",
+      "fallback": "Original sign-in remains accessible."
+    }
+  ],
+  "notes": "Owner-requested bolder cinematic visual world. One looping lead ribbon per viewport, one ambient workspace ticker. Easy reading turns both off globally; reduced motion takes priority. Native scrolling and real clinical evidence remain independent. Mobile distills the rig to static stacked content."
+}

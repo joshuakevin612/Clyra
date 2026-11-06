@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc -b && vite build",
+    "test": "vitest run",
+    "test:browser": "playwright test",
     "format": "prettier --write src",
     "dev:mock": "node scripts/serve-mock.mjs"
   },

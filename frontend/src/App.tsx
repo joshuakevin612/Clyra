@@ -1,5 +1,6 @@
 import { sourceParts } from "./api/source";
 import { Observations } from "./telemetry/Observations";
+import { ExternalImports } from "./imports/ExternalImports";
 import { WelcomeSequence } from "./experience/WelcomeSequence";
 import { WorkspaceMotion } from "./experience/WorkspaceMotion";
 import { useEffect, useRef, useState } from "react";
@@ -163,6 +164,31 @@ export default function App() {
   const [error, setError] = useState<unknown>();
   const [patient, setPatient] = useState<PatientOutput | null>(null);
   const pageHeading = useRef<HTMLHeadingElement>(null);
+  // Client-side navigation: history entries carry in-memory view state only.
+  // The bearer token is never written to history, storage or the URL.
+  function navigate(nextPage: string, nextPatient: PatientOutput | null) {
+    setPage(nextPage);
+    setPatient(nextPatient);
+    const path = nextPatient
+      ? `/workspace/patients/${encodeURIComponent(nextPatient.id)}`
+      : `/workspace/${encodeURIComponent(nextPage || "home")}`;
+    window.history.pushState({ clyra: true, page: nextPage, patient: nextPatient }, "", path);
+  }
+  const openPatient = (p: PatientOutput) => navigate(page, p);
+  useEffect(() => {
+    const pop = (e: PopStateEvent) => {
+      const st = e.state as { clyra?: boolean; page?: string; patient?: PatientOutput | null } | null;
+      if (st?.clyra) {
+        setPage(st.page ?? "");
+        setPatient(st.patient ?? null);
+      } else {
+        setPage("");
+        setPatient(null);
+      }
+    };
+    window.addEventListener("popstate", pop);
+    return () => window.removeEventListener("popstate", pop);
+  }, []);
   useEffect(() => {
     pageHeading.current?.focus();
   }, [page, patient?.id, user?.id]);
@@ -171,6 +197,7 @@ export default function App() {
       setUser(null);
       setPatient(null);
       setPage("");
+      window.history.replaceState(null, "", "/");
     };
     window.addEventListener("session-ended", end);
     const sync = () => {
@@ -192,6 +219,7 @@ export default function App() {
       setUser(null);
       setPatient(null);
       setPage("");
+      window.history.replaceState(null, "", "/");
     }
   }
   const admin = user?.role === "ADMIN" || user?.role === "SUPER_ADMIN";
@@ -368,7 +396,15 @@ export default function App() {
         Skip to main content
       </a>
       <aside className="rail">
-        <a className="brand" href="/" aria-label="Clyra home">
+        <a
+          className="brand"
+          href="/"
+          aria-label="Clyra home"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate(pages[0], null);
+          }}
+        >
           <Leaf />
           clyra
         </a>
@@ -388,8 +424,7 @@ export default function App() {
               className={active === p ? "selected" : ""}
               aria-current={active === p ? "page" : undefined}
               onClick={() => {
-                setPage(p);
-                setPatient(null);
+                navigate(p, null);
               }}
             >
               {i === 0 ? (
@@ -430,13 +465,21 @@ export default function App() {
         </header>
         <div className="content">
           <nav className="breadcrumb" aria-label="Breadcrumb">
-            Workspace
+            <button type="button" className="crumb" onClick={() => navigate(pages[0], null)}>
+              Workspace
+            </button>
             <ChevronRight size={14} />
-            {active}
+            {patient ? (
+              <button type="button" className="crumb" onClick={() => navigate(active, null)}>
+                {active}
+              </button>
+            ) : (
+              <span aria-current="page">{active}</span>
+            )}
             {patient && (
               <>
                 <ChevronRight size={14} />
-                {patient.displayName}
+                <span aria-current="page">{patient.displayName}</span>
               </>
             )}
           </nav>
@@ -464,13 +507,13 @@ export default function App() {
             </aside>
           )}
           {patient ? (
-            <PatientWorkspace patient={patient} setPatient={setPatient} />
+            <PatientWorkspace patient={patient} setPatient={openPatient} />
           ) : active === "Patients" ? (
             <>
               <Resource
                 path="/patients"
                 columns={["displayName", "dateOfBirth", "id", "accessLevel"]}
-                onSelect={(r) => setPatient(r as PatientOutput)}
+                onSelect={(r) => openPatient(r as PatientOutput)}
               />
               <details>
                 <summary>Create a patient</summary>
@@ -478,7 +521,7 @@ export default function App() {
                   names={["displayName", "dateOfBirth"]}
                   label="Create patient"
                   onSave={async (d) => {
-                    setPatient(await send<PatientOutput>("/patients", d));
+                    openPatient(await send<PatientOutput>("/patients", d));
                   }}
                 />
               </details>
@@ -488,7 +531,7 @@ export default function App() {
                   names={["patientId"]}
                   label="Open record"
                   onSave={async (d) => {
-                    setPatient(
+                    openPatient(
                       await request<PatientOutput>(
                         `/patients/${encodeURIComponent(d.patientId)}`,
                       ),
@@ -508,7 +551,7 @@ export default function App() {
               <PatientWorkspace
                 patientId={user.patientId}
                 section={active}
-                setPatient={setPatient}
+                setPatient={openPatient}
               />
             ) : (
               <Empty>
@@ -522,7 +565,6 @@ export default function App() {
         </div>
         <footer className="app-footer">
           Clyra <span>Medication continuity & safe handover</span>
-          <span>Contract v1.3.1</span>
         </footer>
       </main>
     </div>
@@ -962,6 +1004,7 @@ function PatientWorkspace({
             "Comparison",
             "Discrepancies",
             "Documents",
+            "External imports",
             "Observations",
             "Migrations",
             "Access grants",
@@ -979,7 +1022,15 @@ function PatientWorkspace({
           ))}
         </nav>
       )}
-      {tab === "Observations" && clinician ? (
+      {tab === "External imports" && clinician && patient ? (
+        <ExternalImports
+          key={id}
+          patient={patient}
+          write={write}
+          openTab={setTab}
+          refreshPatient={refresh}
+        />
+      ) : tab === "Observations" && clinician ? (
         <Observations key={id} patientId={id} write={write} />
       ) : tab === "Medication timeline" ? (
         <section className="panel">
