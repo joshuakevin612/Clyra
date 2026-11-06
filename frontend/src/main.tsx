@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
+import { OnScreenKeyboard } from './keyboard/OnScreenKeyboard';
 import { ExperienceProvider } from './experience/Experience';
 import { mockMode } from './api/client';
 import './styles.css';
@@ -16,6 +17,6 @@ import './experience/flow.css';
 import './experience/aurum.css';
 async function start(){
  if(mockMode){const {worker}=await import('./mocks/browser');await worker.start({onUnhandledRequest:'bypass'});}
- ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><ExperienceProvider><App/></ExperienceProvider></React.StrictMode>);
+ ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><ExperienceProvider><App/><OnScreenKeyboard/></ExperienceProvider></React.StrictMode>);
 }
 start().catch(()=>{document.getElementById('root')!.textContent='Clyra could not start. Reload to try again.';});

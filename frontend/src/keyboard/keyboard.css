@@ -1,0 +1,24 @@
+.osk-toggle {
+  position: fixed; left: 16px; bottom: 16px; z-index: 1002;
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px;
+  border: 1px solid currentColor; border-radius: 999px; background: Canvas; color: CanvasText; font: inherit; cursor: pointer;
+}
+.osk-toggle:focus-visible, .osk-key:focus-visible, .osk-close:focus-visible { outline: 3px solid Highlight; outline-offset: 2px; }
+.osk {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 1003; padding: 12px 12px 72px;
+  background: Canvas; color: CanvasText; border-top: 2px solid currentColor;
+  display: grid; gap: 6px; max-width: 760px; margin: 0 auto;
+}
+.osk-head { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
+.osk-close { min-width: 44px; min-height: 44px; border: 1px solid currentColor; background: transparent; color: inherit; border-radius: 8px; cursor: pointer; }
+.osk-row { display: flex; gap: 6px; justify-content: center; }
+.osk-key {
+  flex: 1 1 0; min-width: 28px; min-height: 44px; border: 1px solid currentColor; border-radius: 8px;
+  background: Canvas; color: CanvasText; font: inherit; font-size: 16px; cursor: pointer; padding: 0 4px;
+}
+.osk-key.wide { flex: 2 1 0; }
+.osk-key[aria-pressed="true"] { background: Highlight; color: HighlightText; }
+@media (max-width: 480px) { .osk-toggle span { display: none; } .osk-toggle { padding: 0 12px; } .osk { padding-bottom: 68px; } .osk-key { min-width: 24px; font-size: 15px; } }
+@media (prefers-reduced-motion: reduce) { .osk, .osk-toggle, .osk-key { transition: none; } }
+
+html.osk-open body { padding-bottom: 340px; }
