@@ -1,0 +1,111 @@
+/* Optional motion, built on the complete static interface.
+   Clinical values, chart paths, evidence rows and live regions never animate. */
+:root {
+  --motion-step: 70ms;
+  --motion-enter: 420ms;
+  --motion-press: 140ms;
+}
+
+.motion-control:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+/* The line carries the source → review → handover sequence; text stays visible. */
+.record-line li { position: relative; }
+.record-line li::before {
+  content: "";
+  position: absolute;
+  inset: -1px 12px auto 0;
+  height: 2px;
+  background: var(--ivory);
+  transform-origin: left;
+}
+
+.tabs button { position: relative; }
+.tabs button::after {
+  content: "";
+  position: absolute;
+  inset: auto 12px 3px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.tabs button.selected::after { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="on"] .record-line li::before {
+    animation: record-trace var(--motion-enter) var(--ease) backwards;
+  }
+  html[data-motion="on"] .record-line li:nth-child(2)::before { animation-delay: var(--motion-step); }
+  html[data-motion="on"] .record-line li:nth-child(3)::before { animation-delay: calc(2 * var(--motion-step)); }
+  html[data-motion="on"] .tabs button::after {
+    transition: transform var(--speed) var(--ease);
+  }
+  html[data-motion="on"] button:active:not(:disabled):not(.motion-control) {
+    transition-duration: var(--motion-press);
+  }
+}
+
+@keyframes record-trace {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* CSS scroll timelines are progressive enhancement. No spacer, pin, scroll
+   listener, focus change or delayed rendering is involved. Reverse scrolling
+   reverses the accent; entering content remains fully readable throughout. */
+.scroll-chapter { view-timeline-name: --chapter; view-timeline-axis: block; }
+.scroll-chapter > h3::after {
+  content: "";
+  display: block;
+  width: 64px;
+  height: 2px;
+  margin-top: 12px;
+  background: var(--teal);
+  transform-origin: left;
+}
+.reading-progress { display: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    html[data-motion="on"] .scroll-chapter > h3::after {
+      animation: chapter-trace linear both;
+      animation-timeline: --chapter;
+      animation-range: entry 0% entry 100%;
+    }
+    html[data-motion="on"] .reading-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto;
+      height: 2px;
+      background: var(--teal);
+      transform-origin: left;
+      pointer-events: none;
+      z-index: 20;
+      animation: page-trace linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes chapter-trace {
+  from { transform: scaleX(0.2); }
+  to { transform: scaleX(1); }
+}
+@keyframes page-trace {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+@media (max-width: 640px) {
+  .scroll-chapter > h3::after { width: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress { display: none !important; }
+  .record-line li::before, .scroll-chapter > h3::after, .tabs button::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -3426,6 +3426,322 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorOutput'
           description: Internal Server Error
+  /api/v1/patients/{patientId}/telemetry/sessions:
+    post:
+      summary: Create
+      operationId: create_api_v1_patients__patientId__telemetry_sessions_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Patientid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryCreate'
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetrySessionOutput'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Conflict
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Internal Server Error
+        '200':
+          description: Idempotent creation replay
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetrySessionOutput'
+  /api/v1/patients/{patientId}/telemetry/sessions/{sessionId}/readings:
+    post:
+      summary: Ingest
+      operationId: ingest_api_v1_patients__patientId__telemetry_sessions__sessionId__readings_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Patientid
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Sessionid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryReadings'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetryIngested'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Conflict
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Internal Server Error
+  /api/v1/patients/{patientId}/telemetry/sessions/{sessionId}/stop:
+    post:
+      summary: Stop
+      operationId: stop_api_v1_patients__patientId__telemetry_sessions__sessionId__stop_post
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Patientid
+      - name: sessionId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Sessionid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TelemetryStop'
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetrySessionOutput'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Conflict
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Internal Server Error
+  /api/v1/patients/{patientId}/telemetry/snapshot:
+    get:
+      summary: Snapshot
+      operationId: snapshot_api_v1_patients__patientId__telemetry_snapshot_get
+      security:
+      - HTTPBearer: []
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+          title: Patientid
+      - name: sessionId
+        in: query
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Sessionid
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TelemetrySnapshot'
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Not Found
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Conflict
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Unprocessable Entity
+        '429':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorOutput'
+          description: Internal Server Error
 components:
   schemas:
     AccessOutput:
@@ -3933,6 +4249,42 @@ components:
       - documentId
       - status
       title: ExtractionOutput
+    Finding:
+      properties:
+        code:
+          type: string
+          enum:
+          - MISSING
+          - SPIKE
+          - REPEATED
+          - FLUCTUATION
+          - DELAYED
+          - CONFLICT
+          title: Code
+        sourceIds:
+          items:
+            type: string
+            enum:
+            - SENSOR_A
+            - SENSOR_B
+          type: array
+          title: Sourceids
+        observationIds:
+          items:
+            type: string
+          type: array
+          title: Observationids
+        explanation:
+          type: string
+          title: Explanation
+      additionalProperties: false
+      type: object
+      required:
+      - code
+      - sourceIds
+      - observationIds
+      - explanation
+      title: Finding
     GrantBody:
       properties:
         ifVersion:
@@ -4315,6 +4667,67 @@ components:
       - createdAt
       - completedAt
       title: MigrationOutput
+    ObservationOutput:
+      properties:
+        id:
+          type: string
+          title: Id
+        eventId:
+          type: string
+          format: uuid
+          title: Eventid
+        sessionId:
+          type: string
+          title: Sessionid
+        sourceId:
+          type: string
+          enum:
+          - SENSOR_A
+          - SENSOR_B
+          title: Sourceid
+        measuredAt:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Measuredat
+        receivedAt:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Receivedat
+        value:
+          anyOf:
+          - anyOf:
+            - type: number
+            - type: integer
+            ge: 0
+            le: 1000
+          - type: 'null'
+          title: Value
+        flags:
+          items:
+            type: string
+            enum:
+            - MISSING
+            - SPIKE
+            - REPEATED
+            - FLUCTUATION
+            - DELAYED
+            - CONFLICT
+          type: array
+          title: Flags
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - eventId
+      - sessionId
+      - sourceId
+      - measuredAt
+      - receivedAt
+      - value
+      - flags
+      title: ObservationOutput
     OrgBody:
       properties:
         name:
@@ -4788,6 +5201,40 @@ components:
       - displayName
       - dateOfBirth
       title: PatientPatch
+    ReadingInput:
+      properties:
+        eventId:
+          type: string
+          format: uuid
+          title: Eventid
+        sourceId:
+          type: string
+          enum:
+          - SENSOR_A
+          - SENSOR_B
+          title: Sourceid
+        measuredAt:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Measuredat
+        value:
+          anyOf:
+          - anyOf:
+            - type: number
+            - type: integer
+            ge: 0
+            le: 1000
+          - type: 'null'
+          title: Value
+      additionalProperties: false
+      type: object
+      required:
+      - eventId
+      - sourceId
+      - measuredAt
+      - value
+      title: ReadingInput
     Review:
       properties:
         ifVersion:
@@ -4869,6 +5316,80 @@ components:
       - charStart
       - charEnd
       title: Source
+    SourceState:
+      properties:
+        sourceId:
+          type: string
+          enum:
+          - SENSOR_A
+          - SENSOR_B
+          title: Sourceid
+        status:
+          type: string
+          enum:
+          - WAITING
+          - CURRENT
+          - SUSPECT
+          - STALE
+          - ENDED
+          title: Status
+        latestObservationId:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Latestobservationid
+        latestValue:
+          anyOf:
+          - anyOf:
+            - type: number
+            - type: integer
+            ge: 0
+            le: 1000
+          - type: 'null'
+          title: Latestvalue
+        latestMeasuredAt:
+          anyOf:
+          - type: string
+            pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+            format: date-time
+          - type: 'null'
+          title: Latestmeasuredat
+        lastReceivedAt:
+          anyOf:
+          - type: string
+            pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+            format: date-time
+          - type: 'null'
+          title: Lastreceivedat
+        ageSeconds:
+          anyOf:
+          - type: number
+          - type: 'null'
+          title: Ageseconds
+        flags:
+          items:
+            type: string
+            enum:
+            - MISSING
+            - SPIKE
+            - REPEATED
+            - FLUCTUATION
+            - DELAYED
+            - CONFLICT
+          type: array
+          title: Flags
+      additionalProperties: false
+      type: object
+      required:
+      - sourceId
+      - status
+      - latestObservationId
+      - latestValue
+      - latestMeasuredAt
+      - lastReceivedAt
+      - ageSeconds
+      - flags
+      title: SourceState
     Strength:
       properties:
         value:
@@ -4889,6 +5410,190 @@ components:
       - value
       - unit
       title: Strength
+    TelemetryCreate:
+      properties:
+        requestId:
+          type: string
+          format: uuid
+          title: Requestid
+      additionalProperties: false
+      type: object
+      required:
+      - requestId
+      title: TelemetryCreate
+    TelemetryIngested:
+      properties:
+        acceptedCount:
+          type: integer
+          title: Acceptedcount
+        duplicateCount:
+          type: integer
+          title: Duplicatecount
+        serverTime:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Servertime
+      additionalProperties: false
+      type: object
+      required:
+      - acceptedCount
+      - duplicateCount
+      - serverTime
+      title: TelemetryIngested
+    TelemetryReadings:
+      properties:
+        readings:
+          items:
+            $ref: '#/components/schemas/ReadingInput'
+          type: array
+          maxItems: 100
+          minItems: 1
+          title: Readings
+      additionalProperties: false
+      type: object
+      required:
+      - readings
+      title: TelemetryReadings
+    TelemetrySessionOutput:
+      properties:
+        id:
+          type: string
+          title: Id
+        patientId:
+          type: string
+          title: Patientid
+        version:
+          type: integer
+          title: Version
+        status:
+          type: string
+          enum:
+          - ACTIVE
+          - STOPPED
+          - EXPIRED
+          title: Status
+        startedAt:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Startedat
+        expiresAt:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Expiresat
+        stoppedAt:
+          anyOf:
+          - type: string
+            pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+            format: date-time
+          - type: 'null'
+          title: Stoppedat
+        metric:
+          type: string
+          const: HEART_RATE
+          title: Metric
+        unit:
+          type: string
+          const: BPM
+          title: Unit
+        expectedIntervalSeconds:
+          type: integer
+          const: 2
+          title: Expectedintervalseconds
+        sources:
+          items:
+            $ref: '#/components/schemas/TelemetrySource'
+          type: array
+          title: Sources
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - patientId
+      - version
+      - status
+      - startedAt
+      - expiresAt
+      - stoppedAt
+      - metric
+      - unit
+      - expectedIntervalSeconds
+      - sources
+      title: TelemetrySessionOutput
+    TelemetrySnapshot:
+      properties:
+        contractVersion:
+          type: string
+          const: TR-1.0
+          title: Contractversion
+        serverTime:
+          type: string
+          pattern: ^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$
+          format: date-time
+          title: Servertime
+        session:
+          anyOf:
+          - $ref: '#/components/schemas/TelemetrySessionOutput'
+          - type: 'null'
+        observations:
+          items:
+            $ref: '#/components/schemas/ObservationOutput'
+          type: array
+          title: Observations
+        sources:
+          items:
+            $ref: '#/components/schemas/SourceState'
+          type: array
+          title: Sources
+        findings:
+          items:
+            $ref: '#/components/schemas/Finding'
+          type: array
+          title: Findings
+        summary:
+          type: string
+          title: Summary
+      additionalProperties: false
+      type: object
+      required:
+      - contractVersion
+      - serverTime
+      - session
+      - observations
+      - sources
+      - findings
+      - summary
+      title: TelemetrySnapshot
+    TelemetrySource:
+      properties:
+        id:
+          type: string
+          enum:
+          - SENSOR_A
+          - SENSOR_B
+          title: Id
+        label:
+          type: string
+          title: Label
+      additionalProperties: false
+      type: object
+      required:
+      - id
+      - label
+      title: TelemetrySource
+    TelemetryStop:
+      properties:
+        ifVersion:
+          type: integer
+          minimum: 1.0
+          title: Ifversion
+      additionalProperties: false
+      type: object
+      required:
+      - ifVersion
+      title: TelemetryStop
     UploadOutput:
       properties:
         documentId:

@@ -1,0 +1,15 @@
+{
+  "title": "Clyra: context travels with the record",
+  "notes": "Desktop approximate viewport budget. Native sticky scene chain; scroll is the only playhead. On phones the opening and evidence stage stack in document order. Easy reading mounts none of this sequence.",
+  "scenes": [
+    { "name": "Arrival", "mode": "hold", "vh": 100, "intensity": 1, "handoff": null, "lead": "Care in context headline", "support": "Continuity ribbon", "fallback": "Static hero" },
+    { "name": "Continuity", "mode": "move", "vh": 100, "intensity": 4, "handoff": "hero-travel", "pin": "opening", "lead": "Ribbon travels forward while text separates", "exit": "Ribbon fills opening; copy releases", "fallback": "Static ribbon below copy" },
+    { "name": "Handover", "mode": "free", "vh": 120, "intensity": 2, "handoff": "z-cover", "lead": "Record, review, relay text moves left", "exit": "Readable source-context explanation", "fallback": "Native text section" },
+    { "name": "Relay", "mode": "free", "vh": 40, "intensity": 2, "handoff": "text-relay", "lead": "Source, review, handover marquee", "fallback": "Still text band" },
+    { "name": "Traceable", "mode": "move", "vh": 132, "intensity": 4, "handoff": "hold-release", "pin": "evidence", "lead": "Headline recedes into evidence stage", "fallback": "Headline above evidence" },
+    { "name": "Evidence", "mode": "move", "vh": 132, "intensity": 4, "handoff": "reveal", "pin": "evidence", "lead": "Source and review converge from opposing sides; signature draws", "exit": "Upright evidence and complete signature", "fallback": "Stacked illustration with complete signature" },
+    { "name": "Release", "mode": "hold", "vh": 40, "intensity": 1, "handoff": "hold-release", "pin": "evidence", "lead": "Complete evidence composition", "fallback": "Static evidence" },
+    { "name": "Explore", "mode": "free", "vh": 130, "intensity": 3, "handoff": "match-color", "lead": "Walkthrough specimen rotates upright and settles", "support": "Keyboard operable tabs", "fallback": "Static interactive walkthrough" },
+    { "name": "Close", "mode": "free", "vh": 80, "intensity": 1, "handoff": "hold-release", "lead": "The next person gets the whole story", "exit": "One workspace action", "fallback": "Still closing section" }
+  ]
+}

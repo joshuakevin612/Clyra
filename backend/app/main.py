@@ -228,7 +228,11 @@ def event_view(row, audit_event=False):
     result = {'id': row.id, 'orgId': row.org_id, 'patientId': row.patient_id, **{k: row.data.get(k) for k in fields}}
     if audit_event:
         action = result['action'] or ''
-        if not action.startswith(('USER_','ORGANISATION_','PATIENT_LOGIN_','LINK_','MIGRATION_')):
+        if action.startswith('TELEMETRY_'):
+            counts = result['after'] if isinstance(result['after'], dict) else None
+            result.update(before=None, note=None, after={k:v for k,v in counts.items()
+                if k in ('acceptedCount','duplicateCount') and type(v) is int and v >= 0} if counts is not None else None)
+        elif not action.startswith(('USER_','ORGANISATION_','PATIENT_LOGIN_','LINK_','MIGRATION_')):
             result.update(before=None, after=None, note=None)
         else:
             # Defense in depth: no arbitrary nested dictionaries in metadata responses.
@@ -678,5 +682,8 @@ def grant_access(patientId: str, orgId: str, body: GrantBody, u=Depends(current_
     update(p,{})
     audit(db,u,'ACCESS_GRANT_CHANGED',result.id,p.id,org_id=orgId)
     return {'id':result.id,'version':result.version,'patientId':p.id,'orgId':orgId,'level':body.level}
+
+from .telemetry_api import register as register_telemetry
+register_telemetry(router)
 
 app=create_app()

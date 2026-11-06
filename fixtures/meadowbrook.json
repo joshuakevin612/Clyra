@@ -1,0 +1,314 @@
+{
+  "organisations": [
+    {
+      "id": "org_meadow_demo",
+      "name": "Meadowbrook Demo Clinic (synthetic)"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr_meadow_meadow",
+      "username": "admin.meadow",
+      "displayName": "Admin Meadow (synthetic)",
+      "role": "ADMIN",
+      "orgId": "org_meadow_demo",
+      "patientId": null
+    },
+    {
+      "id": "usr_meadow_maya",
+      "username": "dr.maya",
+      "displayName": "Dr Maya Chen (synthetic)",
+      "role": "CLINICIAN",
+      "orgId": "org_meadow_demo",
+      "patientId": null
+    },
+    {
+      "id": "usr_meadow_ethan",
+      "username": "dr.ethan",
+      "displayName": "Dr Ethan Brooks (synthetic)",
+      "role": "CLINICIAN",
+      "orgId": "org_meadow_demo",
+      "patientId": null
+    },
+    {
+      "id": "usr_meadow_sofia",
+      "username": "dr.sofia",
+      "displayName": "Dr Sofia Patel (synthetic)",
+      "role": "CLINICIAN",
+      "orgId": "org_meadow_demo",
+      "patientId": null
+    },
+    {
+      "id": "usr_meadow_patient_01",
+      "username": "ava.meadow",
+      "displayName": "Ava Meadow (synthetic)",
+      "role": "PATIENT",
+      "orgId": "org_meadow_demo",
+      "patientId": "pat_meadow_01"
+    },
+    {
+      "id": "usr_meadow_patient_02",
+      "username": "noah.meadow",
+      "displayName": "Noah Meadow (synthetic)",
+      "role": "PATIENT",
+      "orgId": "org_meadow_demo",
+      "patientId": "pat_meadow_02"
+    },
+    {
+      "id": "usr_meadow_patient_03",
+      "username": "mia.meadow",
+      "displayName": "Mia Meadow (synthetic)",
+      "role": "PATIENT",
+      "orgId": "org_meadow_demo",
+      "patientId": "pat_meadow_03"
+    },
+    {
+      "id": "usr_meadow_patient_04",
+      "username": "leo.meadow",
+      "displayName": "Leo Meadow (synthetic)",
+      "role": "PATIENT",
+      "orgId": "org_meadow_demo",
+      "patientId": "pat_meadow_04"
+    },
+    {
+      "id": "usr_meadow_patient_05",
+      "username": "isla.meadow",
+      "displayName": "Isla Meadow (synthetic)",
+      "role": "PATIENT",
+      "orgId": "org_meadow_demo",
+      "patientId": "pat_meadow_05"
+    },
+    {
+      "id": "usr_meadow_patient_06",
+      "username": "owen.meadow",
+      "displayName": "Owen Meadow (synthetic)",
+      "role": "PATIENT",
+      "orgId": "org_meadow_demo",
+      "patientId": "pat_meadow_06"
+    }
+  ],
+  "patients": [
+    {
+      "id": "pat_meadow_01",
+      "displayName": "Ava Meadow (synthetic)",
+      "dateOfBirth": "1982-04-12",
+      "orgId": "org_meadow_demo",
+      "linkedUserId": "usr_meadow_patient_01"
+    },
+    {
+      "id": "pat_meadow_02",
+      "displayName": "Noah Meadow (synthetic)",
+      "dateOfBirth": "1974-09-23",
+      "orgId": "org_meadow_demo",
+      "linkedUserId": "usr_meadow_patient_02"
+    },
+    {
+      "id": "pat_meadow_03",
+      "displayName": "Mia Meadow (synthetic)",
+      "dateOfBirth": "1991-01-16",
+      "orgId": "org_meadow_demo",
+      "linkedUserId": "usr_meadow_patient_03"
+    },
+    {
+      "id": "pat_meadow_04",
+      "displayName": "Leo Meadow (synthetic)",
+      "dateOfBirth": "1968-07-05",
+      "orgId": "org_meadow_demo",
+      "linkedUserId": "usr_meadow_patient_04"
+    },
+    {
+      "id": "pat_meadow_05",
+      "displayName": "Isla Meadow (synthetic)",
+      "dateOfBirth": "1987-11-20",
+      "orgId": "org_meadow_demo",
+      "linkedUserId": "usr_meadow_patient_05"
+    },
+    {
+      "id": "pat_meadow_06",
+      "displayName": "Owen Meadow (synthetic)",
+      "dateOfBirth": "1979-06-08",
+      "orgId": "org_meadow_demo",
+      "linkedUserId": "usr_meadow_patient_06"
+    }
+  ],
+  "visits": [
+    {
+      "id": "vis_meadow_01_1",
+      "patientId": "pat_meadow_01",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-10-01"
+    },
+    {
+      "id": "vis_meadow_01_2",
+      "patientId": "pat_meadow_01",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-11-01"
+    },
+    {
+      "id": "vis_meadow_02_1",
+      "patientId": "pat_meadow_02",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-10-01"
+    },
+    {
+      "id": "vis_meadow_02_2",
+      "patientId": "pat_meadow_02",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-11-01"
+    },
+    {
+      "id": "vis_meadow_03_1",
+      "patientId": "pat_meadow_03",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-10-01"
+    },
+    {
+      "id": "vis_meadow_03_2",
+      "patientId": "pat_meadow_03",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-11-01"
+    },
+    {
+      "id": "vis_meadow_04_1",
+      "patientId": "pat_meadow_04",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-10-01"
+    },
+    {
+      "id": "vis_meadow_04_2",
+      "patientId": "pat_meadow_04",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-11-01"
+    },
+    {
+      "id": "vis_meadow_05_1",
+      "patientId": "pat_meadow_05",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-10-01"
+    },
+    {
+      "id": "vis_meadow_05_2",
+      "patientId": "pat_meadow_05",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-11-01"
+    },
+    {
+      "id": "vis_meadow_06_1",
+      "patientId": "pat_meadow_06",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-10-01"
+    },
+    {
+      "id": "vis_meadow_06_2",
+      "patientId": "pat_meadow_06",
+      "orgId": "org_meadow_demo",
+      "visitDate": "2026-11-01"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc_meadow_01_1",
+      "patientId": "pat_meadow_01",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_01_1"
+    },
+    {
+      "id": "doc_meadow_01_2",
+      "patientId": "pat_meadow_01",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_01_2"
+    },
+    {
+      "id": "doc_meadow_02_1",
+      "patientId": "pat_meadow_02",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_02_1"
+    },
+    {
+      "id": "doc_meadow_02_2",
+      "patientId": "pat_meadow_02",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_02_2"
+    },
+    {
+      "id": "doc_meadow_03_1",
+      "patientId": "pat_meadow_03",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_03_1"
+    },
+    {
+      "id": "doc_meadow_03_2",
+      "patientId": "pat_meadow_03",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_03_2"
+    },
+    {
+      "id": "doc_meadow_04_1",
+      "patientId": "pat_meadow_04",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_04_1"
+    },
+    {
+      "id": "doc_meadow_04_2",
+      "patientId": "pat_meadow_04",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_04_2"
+    },
+    {
+      "id": "doc_meadow_05_1",
+      "patientId": "pat_meadow_05",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_05_1"
+    },
+    {
+      "id": "doc_meadow_05_2",
+      "patientId": "pat_meadow_05",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_05_2"
+    },
+    {
+      "id": "doc_meadow_06_1",
+      "patientId": "pat_meadow_06",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_06_1"
+    },
+    {
+      "id": "doc_meadow_06_2",
+      "patientId": "pat_meadow_06",
+      "orgId": "org_meadow_demo",
+      "visitId": "vis_meadow_06_2"
+    }
+  ],
+  "assignments": [
+    {
+      "clinicianUsername": "dr.maya",
+      "patientId": "pat_meadow_01",
+      "patientUsername": "ava.meadow"
+    },
+    {
+      "clinicianUsername": "dr.maya",
+      "patientId": "pat_meadow_02",
+      "patientUsername": "noah.meadow"
+    },
+    {
+      "clinicianUsername": "dr.ethan",
+      "patientId": "pat_meadow_03",
+      "patientUsername": "mia.meadow"
+    },
+    {
+      "clinicianUsername": "dr.ethan",
+      "patientId": "pat_meadow_04",
+      "patientUsername": "leo.meadow"
+    },
+    {
+      "clinicianUsername": "dr.sofia",
+      "patientId": "pat_meadow_05",
+      "patientUsername": "isla.meadow"
+    },
+    {
+      "clinicianUsername": "dr.sofia",
+      "patientId": "pat_meadow_06",
+      "patientUsername": "owen.meadow"
+    }
+  ]
+}

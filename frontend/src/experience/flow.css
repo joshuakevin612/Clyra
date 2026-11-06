@@ -1,0 +1,248 @@
+:root {
+  /* Preserve the original globals used by the preference dialog and reading UI. */
+  --flow-plum: #101c36;
+  --flow-pear: #ff512b;
+  --flow-porcelain: #f8fbff;
+  --flow-orchid: #dce6ff;
+  --cinema-blue: var(--flow-plum);
+  --cinema-coral: var(--flow-pear);
+  --cinema-paper: var(--flow-porcelain);
+  --cinema-ink: var(--flow-plum);
+  --cinema-rule: #cbd5e6;
+  --flow-cycle: 24s;
+  --flow-breathe: 8s;
+  --flow-camera-ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+html[data-experience="cinematic"] {
+  --flow-plum: #103e38;
+  --flow-pear: #d4ea70;
+  --flow-porcelain: #f1f7f2;
+  --flow-orchid: #c6dfd6;
+  /* Existing cinematic consumers retain their token names across the redesign. */
+  --cinema-blue: var(--flow-plum);
+  --cinema-coral: var(--flow-pear);
+  --cinema-paper: var(--flow-porcelain);
+  --cinema-ink: var(--flow-plum);
+  --cinema-rule: #a4bfb3;
+  --flow-cycle: 24s;
+  --flow-breathe: 8s;
+  --flow-camera-ease: cubic-bezier(0.65, 0, 0.35, 1);
+}
+html[data-experience="cinematic"] {
+  --pine: var(--flow-plum);
+  --teal: #216352;
+  --ink: var(--flow-plum);
+  --muted: #47665a;
+  --line: var(--cinema-rule);
+  --soft: #e0ece2;
+  --ivory: var(--flow-porcelain);
+  --paper: #f8fcf8;
+}
+html { scroll-padding-block: 80px 48px; }
+.workspace :is(a, button, input, select, textarea, [tabindex]) { scroll-margin-block: 80px 48px; }
+.continuity-ribbon { display: block; width: 100%; height: 100%; pointer-events: none; }
+.cinema-hero { background: var(--flow-pear); color: var(--flow-plum); isolation: isolate; }
+.cinema-hero-body { position: relative; z-index: 2; margin-top: 56px; margin-bottom: 64px; }
+.cinema-hero h1 { font-size: clamp(110px, 16vw, 240px); line-height: 0.78; }
+.cinema-hero h1 > span:nth-child(2) { margin-left: 14%; }
+.cinema-hero-aside { margin-top: 260px; background: var(--flow-pear); padding: 20px 0 12px 20px; align-self: end; }
+.cinema-hero .cinema-action { background: var(--flow-plum); color: var(--flow-pear); }
+.flow-hero-art { position: absolute; z-index: 1; right: -11%; top: 2%; width: 68%; height: 84%; pointer-events: none; }
+.cinema-hero-footer { z-index: 3; }
+.cinema-nav { z-index: 4; }
+.cinema-hero :focus-visible { outline-color: var(--flow-plum); }
+.cinema-problem { background: var(--flow-porcelain); }
+.cinema-word-relay { color: var(--flow-plum); }
+.flow-marquee { overflow: clip; background: var(--flow-plum); color: var(--flow-pear); padding: 24px 0 30px; }
+.flow-marquee > div { display: flex; width: max-content; animation: flow-loop var(--flow-cycle) linear infinite; }
+.flow-marquee span { display: inline-flex; align-items: center; gap: 40px; padding-right: 40px; font-family: "Barlow Condensed", sans-serif; font-size: clamp(64px, 8vw, 120px); line-height: 1; }
+.flow-marquee i { display: inline-block; width: 28px; height: 28px; border-radius: 50%; border: 2px solid currentColor; }
+.flow-marquee[data-paused="true"] > div { animation-play-state: paused; }
+.cinema-orbit { background: var(--flow-orchid); }
+.orbit-paper { border-radius: 3px; }
+.orbit-finding { background: var(--flow-plum); color: var(--flow-pear); }
+.orbit-stamp { background: var(--flow-pear); color: var(--flow-plum); border: 1px solid var(--flow-plum); }
+.orbit-stamp::after { content: ""; position: absolute; inset: 8px; border: 1px dashed currentColor; border-radius: 50%; animation: stamp-spin var(--flow-cycle) linear infinite; }
+.cinema-orbit[data-idle-paused="true"] .orbit-stamp::after,
+.cinema-orbit[data-idle-paused="true"] .orbit-thread { animation-play-state: paused; }
+.cinema-explore { background: var(--flow-plum); color: var(--flow-porcelain); }
+.explore-tabs button[aria-selected="true"] { border-color: var(--flow-pear); }
+.cinema-explore :focus-visible { outline-color: var(--flow-pear); }
+.explore-specimen { background: var(--flow-pear); color: var(--flow-plum); }
+.explore-specimen p { border-color: var(--flow-plum); }
+.cinema-close { background: var(--flow-pear); color: var(--flow-plum); }
+.cinema-close .cinema-action { background: var(--flow-plum); color: var(--flow-pear); }
+.workspace-ribbon { position: fixed; top: 100px; right: -88px; width: 320px; height: 320px; opacity: 0.24; pointer-events: none; z-index: 1; }
+html[data-experience="cinematic"] .workspace > .rail, html[data-experience="cinematic"] .workspace > .main { position: relative; z-index: 2; }
+html[data-experience="cinematic"] .workspace > .rail { position: sticky; }
+html[data-experience="cinematic"] .workspace { padding-bottom: 34px; }
+.workspace-motion-strip { position: fixed; inset: auto 0 0; height: 30px; z-index: 15; background: var(--flow-pear); color: var(--flow-plum); overflow: clip; pointer-events: none; }
+.workspace-motion-strip > div { width: max-content; display: flex; animation: flow-loop 32s linear infinite; }
+.workspace-motion-strip span { display: inline-flex; align-items: center; gap: 24px; padding-right: 24px; min-height: 30px; font-size: 12px; font-weight: 600; letter-spacing: 0.02em; }
+.workspace-motion-strip i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.workspace-motion-strip[data-paused="true"] > div { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-experience="cinematic"] .workspace .content > .panel:not(:focus-within),
+  html[data-experience="cinematic"] .workspace .content > section:not(:focus-within) { animation: flow-panel var(--cinema-settle) var(--ease) both; }
+  html[data-experience="cinematic"] .rail nav button svg:last-child { transition: transform var(--speed) var(--ease); }
+  html[data-experience="cinematic"] .rail nav button:focus-visible svg:last-child { transform: translateX(5px); }
+  html[data-experience="cinematic"] .explore-specimen > strong { animation: specimen-settle var(--cinema-settle) var(--ease) both; }
+  html[data-experience="cinematic"] .explore-specimen { animation: specimen-recompose var(--cinema-settle) var(--ease) both; }
+  @media (hover: hover) {
+    html[data-experience="cinematic"] .rail nav button:hover svg:last-child { transform: translateX(5px); }
+    html[data-experience="cinematic"] .cinema-action { transition: border-radius var(--speed) var(--ease), transform var(--speed) var(--ease); }
+    html[data-experience="cinematic"] .cinema-action:hover { border-radius: 26px; transform: translateY(-2px); }
+  }
+  @supports (animation-timeline: view()) {
+    .cinema-orbit { height: 380svh; }
+    .orbit-world { animation: camera-corner var(--flow-camera-ease) both; animation-timeline: --orbit; animation-range: contain 0% contain 100%; transform-origin: 50% 50%; }
+    .orbit-thread { animation: connection-live var(--flow-breathe) ease-in-out infinite alternate; }
+  }
+}
+@keyframes flow-loop { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes stamp-spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+@keyframes flow-panel { from { opacity: 0.85; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes specimen-settle { from { transform: translateY(10px); } to { transform: none; } }
+@keyframes specimen-recompose { from { opacity: 0.7; translate: 18px 8px; } to { opacity: 1; translate: 0 0; } }
+/* The settled headline must not clip the glyphs below its condensed line box. */
+@keyframes title-cut { from { clip-path: inset(0 0 100%); transform: translateY(28%); } to { clip-path: inset(-20% -5% -24%); transform: translateY(0); } }
+@keyframes connection-live { from { transform: rotate(-7deg) scale(0.96); } to { transform: rotate(7deg) scale(1.04); } }
+@keyframes camera-corner {
+  0%, 12% { transform: translate(5%, 4%) scale(0.78); }
+  30% { transform: translate(-3%, -2%) scale(1.02); }
+  48%, 56% { transform: translate(3%, 0) scale(0.9); }
+  76% { transform: translate(-3%, -2%) scale(1.06); }
+  92%, 100% { transform: translate(0, 0) scale(0.82); }
+}
+@media (max-width: 900px) {
+  .flow-hero-art { width: 95%; height: 620px; top: 60px; right: -29%; }
+  .cinema-hero h1 { font-size: clamp(110px, 20vw, 180px); }
+  .cinema-hero-aside { max-width: 36ch; margin-top: 24px; padding-left: 0; background: transparent; }
+  .cinema-hero-body { gap: 24px; }
+}
+@media (max-width: 640px) {
+  .flow-hero-art { position: relative; width: calc(100% + 48px); height: 360px; top: auto; right: auto; margin: -24px -24px -8px; }
+  .cinema-hero h1 { font-size: clamp(82px, 25vw, 145px); }
+  .cinema-hero-body { margin: 48px 0 24px; }
+  .cinema-hero-aside { margin-top: 24px; }
+  .cinema-orbit { height: auto; }
+  .orbit-world { animation: none; }
+  .orbit-stamp::after { animation-duration: 36s; }
+  .workspace-ribbon { width: 210px; height: 210px; right: -80px; top: 180px; opacity: 0.16; }
+  html[data-experience="cinematic"] .workspace > .rail { position: relative; }
+  .flow-marquee span { gap: 24px; padding-right: 24px; }
+  .flow-marquee i { width: 18px; height: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .continuity-ribbon, .workspace-ribbon, .workspace-motion-strip { display: none; }
+  .flow-marquee > div, .orbit-stamp::after { animation: none; }
+}
+
+/* Keep prose and the entire animated illustration in separate layout tracks. */
+.cinema-orbit-stage { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 32px; align-items: center; padding-bottom: 110px; }
+.orbit-heading { width: 100%; }
+.orbit-heading h2 { font-size: clamp(42px, 4.5vw, 68px); }
+.orbit-world { position: relative; inset: auto; width: 100%; height: 440px; scale: 1; overflow: clip; }
+.orbit-original { left: 7%; width: 195px; transform: none; animation: none !important; }
+.orbit-finding { right: 4%; width: 195px; transform: none; animation: none !important; }
+.orbit-paper { min-height: 290px; padding: 20px; }
+.orbit-paper strong { font-size: 34px; }
+.orbit-stamp { width: 130px; height: 130px; font-size: 24px; bottom: 3%; right: 8%; }
+.orbit-thread { left: 46%; }
+.orbit-signature { position: absolute; inset: auto 10% 3%; width: 80%; height: 90px; color: var(--flow-plum); pointer-events: none; }
+.orbit-signature path { fill: none; stroke: currentColor; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+@supports (animation-timeline: view()) {
+  .orbit-signature path { animation: signature-draw linear both; animation-timeline: --orbit; animation-range: contain 68% contain 96%; }
+}
+@keyframes signature-draw { to { stroke-dashoffset: 0; } }
+@media (max-width: 900px) {
+ .cinema-orbit-stage { grid-template-columns: minmax(0,1fr); gap: 20px; padding-top: 40px; }
+ .orbit-heading { max-width: 58ch; }
+ .orbit-heading h2 { font-size: 44px; }
+ .orbit-heading p { max-width: none; margin-top: 12px; }
+ .orbit-world { height: 360px; }
+}
+@media (max-width: 640px) {
+ .cinema-orbit-stage { min-height: 850px; }
+ .orbit-world { height: 450px; overflow: clip; }
+ .orbit-paper { width: 155px; padding: 16px; }
+ .orbit-original { left: 0; top: 0; }
+ .orbit-finding { right: 0; top: 24%; }
+ .orbit-paper strong { font-size: 28px; }
+ .orbit-stamp { width: 105px; height: 105px; font-size: 20px; }
+ .orbit-signature { inset-inline: 0; width: 100%; }
+}
+
+.orbit-world { animation: none !important; transition: translate 400ms var(--ease); }
+
+/* A single staged composition: headline → recession → evidence → signature. */
+@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
+ .cinema-orbit { --title-scale: 1; --title-opacity: 1; --signature-offset: 1; height: 400svh; }
+ .cinema-orbit-stage { display: block; min-height: 560px; }
+ .orbit-heading { position: absolute; inset: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; transform: scale(var(--title-scale)); opacity: var(--title-opacity); pointer-events: none; z-index: 0; }
+ .orbit-heading h2 { font-size: clamp(70px, 11vw, 160px); font-weight: 700; line-height: .9; max-width: none; }
+ .orbit-heading p { max-width: none; }
+ .orbit-world { position: absolute; inset: 5% 8% 12%; width: auto; height: auto; max-width: 1080px; margin: auto; transform-origin: center; }
+ .orbit-paper { width: 26%; max-width: 280px; min-height: 300px; top: 10%; }
+ .orbit-original { left: 4%; }
+ .orbit-finding { right: 4%; top: 20%; }
+ .orbit-paper strong { font-size: clamp(28px, 3vw, 44px); }
+ .orbit-thread { left: 46%; top: 37%; }
+ .orbit-stamp { bottom: 7%; right: 6%; }
+ .orbit-signature { inset: auto 8% 0; width: 84%; height: 110px; }
+ .orbit-signature path { animation: none !important; stroke-dashoffset: var(--signature-offset); }
+}
+
+/* Colour acts: chartreuse opening → pale mint → sage evidence → surgical teal. */
+.cinema-problem { background: var(--flow-porcelain); }
+.cinema-close { background: var(--flow-plum); color: var(--flow-porcelain); }
+.cinema-close p, .cinema-close > span { color: var(--flow-porcelain); }
+.cinema-close .cinema-action { background: var(--flow-pear); color: var(--flow-plum); }
+
+/* The ribbon carries continuity; the type moves aside to let it travel.
+   Opening: 0–12% hold, 12–82% travel, 82–100% release into the relay.
+   Scope every enhancement to cinematic so easy reading retains its CSS. */
+html[data-experience="cinematic"] { accent-color: var(--flow-plum); scrollbar-color: var(--flow-plum) var(--flow-porcelain); }
+html[data-experience="cinematic"] ::selection { background: var(--flow-plum); color: var(--flow-pear); }
+html[data-experience="cinematic"] .cinema-landing { overflow: clip; }
+html[data-experience="cinematic"] .cinema-opening { background: var(--flow-pear); position: relative; }
+html[data-experience="cinematic"] .cinema-hero h1 { letter-spacing: -0.01em; line-height: 0.86; }
+html[data-experience="cinematic"] .cinema-wordmark { letter-spacing: -0.035em; }
+html[data-experience="cinematic"] .cinema-action { border-radius: 0; }
+html[data-experience="cinematic"] .cinema-action:hover { border-radius: 0; transform: none; }
+html[data-experience="cinematic"] .cinema-hero-aside { background: var(--flow-pear); padding: 20px; }
+html[data-experience="cinematic"] .cinema-problem { position: relative; z-index: 2; border-radius: 0; }
+html[data-experience="cinematic"] .cinema-word-relay { animation: none; transform: translateX(var(--relay-travel, 0%)); }
+html[data-experience="cinematic"] .cinema-explore { overflow: clip; }
+html[data-experience="cinematic"] .orbit-stamp::after { animation: none; }
+html[data-experience="cinematic"] .orbit-thread { animation: none; }
+html[data-experience="cinematic"] .cinema-close { background: var(--flow-porcelain); color: var(--flow-plum); }
+html[data-experience="cinematic"] .cinema-close p,
+html[data-experience="cinematic"] .cinema-close > span { color: var(--flow-plum); }
+html[data-experience="cinematic"] .cinema-close .cinema-action { background: var(--flow-plum); color: var(--flow-pear); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html[data-experience="cinematic"] .explore-art { transform: translateY(var(--explore-arrival, 0px)) rotate(var(--explore-turn, 0deg)); transform-origin: 50% 100%; }
+}
+@media (min-width: 901px) and (min-height: 760px) and (prefers-reduced-motion: no-preference) {
+  html[data-experience="cinematic"] .cinema-opening { height: 200svh; }
+  html[data-experience="cinematic"] .cinema-hero { position: sticky; top: 64px; height: calc(100svh - 64px); min-height: 0; display: flex; flex-direction: column; }
+  html[data-experience="cinematic"] .cinema-hero-body { flex: 1; margin-block: 40px 36px; }
+  html[data-experience="cinematic"] .cinema-hero h1 { font-size: clamp(110px, min(16vw, 23svh), 240px); }
+  html[data-experience="cinematic"] .cinema-hero h1 > span { translate: var(--opening-shift, 0px) 0; }
+  html[data-experience="cinematic"] .cinema-hero h1 > span:nth-child(2) { translate: var(--opening-counter, 0px) 0; }
+  html[data-experience="cinematic"] .cinema-hero-body,
+  html[data-experience="cinematic"] .cinema-hero-footer { opacity: var(--opening-fade, 1); }
+  html[data-experience="cinematic"] .cinema-hero-aside { margin-top: clamp(120px, 22svh, 260px); }
+  html[data-experience="cinematic"] .flow-hero-art { transform: translateX(var(--ribbon-travel, 0px)) rotate(var(--ribbon-turn, 0deg)) scale(var(--ribbon-scale, 1)); }
+}
+@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
+  html[data-experience="cinematic"] .cinema-orbit-stage { position: sticky; top: 64px; height: calc(100svh - 64px); }
+  html[data-experience="cinematic"] .orbit-original { transform: translateX(calc(-1 * var(--evidence-travel, 0vw))) rotate(calc(-1 * var(--evidence-turn, 0deg))); }
+  html[data-experience="cinematic"] .orbit-finding { transform: translateX(var(--evidence-travel, 0vw)) rotate(var(--evidence-turn, 0deg)); }
+}
+@media (max-width: 640px) {
+  html[data-experience="cinematic"] .orbit-world { scale: 1; }
+  html[data-experience="cinematic"] .orbit-signature path { animation: none; stroke-dashoffset: 0; }
+}

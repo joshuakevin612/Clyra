@@ -1,51 +1,80 @@
 # Clyra
 
-Medication continuity and safe handover. Synthetic data only.
+Medication continuity and safe handover. Synthetic development data only.
 
-The React/Vite frontend is integrated with Member 2's FastAPI backend from https://github.com/joshuakevin612/Clyra. The working integrated code is in `backend/` and `frontend/`. The local reference checkout in `backend-source/` is excluded from the repository.
+This repository contains the current React/Vite frontend and FastAPI backend, including telemetry, migrations, runtime scripts, and shared fixtures. Tests, environment files, credentials, installed dependencies, and generated build outputs are excluded.
 
-## Start
+## Run on a new Windows PC with the existing Neon database
 
-Install the frontend with `npm --prefix frontend install`. For a standalone browser demo, run `npm run dev:mock` and use the URL printed by Vite. MSW reads the shared `fixtures/`, simulates all UI workflows in memory, and resets on page reload. Demo accounts: dr.north, dr.riverside, admin.north, admin.riverside, alex.example, sam.signup, platform.demo. Demo password: `Clyra-demo-2026`. The platform demo requires a password change.
+Use the **exact same existing Neon development database** as the current installation. You will receive its existing restricted runtime connection credentials and application account credentials privately. Do not create a database, run migrations, seed fixtures, bootstrap accounts, or reset passwords as part of this setup.
 
-For the real API with an isolated fixture database:
+Install Node.js 22.12+ (or a newer supported LTS), Git, and Python 3.11. Then run in PowerShell:
 
 ```powershell
+git clone https://github.com/joshuakevin612/Clyra.git
+cd Clyra
+npm --prefix frontend ci
 python -m venv backend/.venv
-backend/.venv/Scripts/python.exe -m pip install -r backend/requirements.lock.txt
+.\backend\.venv\Scripts\python.exe -m pip install -r backend/requirements.lock.txt
+```
+
+Create `backend/.env` locally using the privately supplied existing runtime configuration. This file is intentionally absent from the repository. Its required settings are:
+
+```dotenv
+DATABASE_URL=postgresql+psycopg://APP_USER:PASSWORD@EXISTING_POOLED_HOST/EXISTING_DATABASE?sslmode=require
+ENVIRONMENT=development
+```
+
+The URL above is a placeholder: use the supplied exact existing pooled connection URL, with the restricted application role. Do not use owner credentials or a Neon management API key for the application. No migration connection or migration environment file is needed to run against the already configured database. You may securely copy the current installation's `backend/.env` to the same relative path on the new PC instead of entering it manually. Never commit it.
+
+Start both services from the repository root:
+
+```powershell
+npm run dev:neon
+```
+
+- Frontend: http://127.0.0.1:5177
+- Backend API: http://127.0.0.1:8001/api/v1
+- Interactive API documentation: http://127.0.0.1:8001/docs
+
+The launcher starts the real frontend and backend and configures the frontend API proxy automatically. A frontend environment file is unnecessary. Sign in with the **existing database's application account credentials**, provided privately. The local demo password does not apply to these accounts.
+
+Keep the terminal running. Press **Ctrl+C** to stop both services. On later runs, open PowerShell in the cloned `Clyra` folder and run `npm run dev:neon` again. Virtual environment activation is unnecessary.
+
+All connected PCs share the same database: application changes are visible to other users and persist after restarting the servers.
+
+## Connection troubleshooting
+
+If the frontend loads but sign-in or data access fails, inspect the backend terminal. The local servers can start even when the database is unreachable. The new PC must be able to resolve the existing Neon hostname and connect outbound on PostgreSQL port **5432**; HTTPS access on port 443 alone does not establish database connectivity. Check VPN, firewall, network, and database access settings when connections time out. On 6 November 2026, the current PC resolved the Neon hostname and reached HTTPS but timed out on both pooled and direct PostgreSQL connections.
+
+If port 5177 or 8001 is occupied, stop the previous Clyra server before restarting.
+
+## Optional isolated local demo
+
+After installing dependencies, this command runs the same frontend and backend with a temporary SQLite fixture database, independently of Neon:
+
+```powershell
 npm run dev:integrated
 ```
 
-Open http://127.0.0.1:5177. The API runs at http://127.0.0.1:8000. The same development logins work here. This mode uses an ephemeral SQLite test database and never connects to Neon; restarting the API resets the data. Do not use it as a deployment configuration.
+Open http://127.0.0.1:5177. The backend runs on port 8000, with docs at http://127.0.0.1:8000/docs. Sign in with `dr.north` / `Clyra-demo-2026`. This mode does not connect to the shared Neon database; its data resets when the backend restarts. Stop the running mode before switching modes.
 
-For Neon or another persistent backend, follow `backend/README.md` and configure `frontend/.env` with `VITE_API_BASE_URL=/api/v1`. Vite proxies `/api` to localhost:8000. No database credentials are bundled. Production hosting must proxy `/api/v1` to FastAPI or set the full API base URL with exact backend CORS origins.
+For a frontend-only simulation without FastAPI, use `npm run dev:mock` and open the URL printed by Vite. Its browser data resets on page reload.
 
-## Contract and integration
+## Production frontend build
 
-`contract/CONTRACT.md`, `contract/IMPLEMENTATION_NOTES.md`, and `contract/openapi.yaml` are authoritative. API types are generated in `frontend/src/api/generated.ts`; run `python frontend/scripts/generate_types.py` after schema export (`.venv/Scripts/python.exe -m scripts.export_openapi` from backend). The generator requires PyYAML, included in backend dependencies.
+```powershell
+npm run build
+```
 
-One additive integration endpoint was necessary: GET `/api/v1/patients/{patientId}/login` exposes the linked login's current UserOutput metadata/version to FULL-access clinicians. It is access-logged, tenant checked, covered by tests, and documented in section 12 and CHANGELOG.md. Password changes revoke the session and return to sign-in. No clinical values can be edited directly; source-backed replacements remain separate, unverified entries in history.
+Output is generated in `frontend/dist`. The development launcher is not a production hosting configuration. Production hosting must proxy `/api/v1` to FastAPI or configure an explicit API base URL and backend CORS origins.
 
-## Verification
+## Source layout
 
-- `npm run build`: production TypeScript/Vite build.
-- `npm test`: client and fixture-driven MSW tests.
-- `.venv/Scripts/python.exe -m pytest -q` from backend: backend tests.
-- `npx playwright test` from frontend with the isolated API running on port 8000: desktop/mobile and real API browser checks. Install Chromium with `npx playwright install chromium` if no cached browser is available. `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` can select a browser explicitly.
-
-Local validation: 36 backend tests, 13 frontend tests, 6 browser checks. Browser checks include tenant isolation messaging, verbatim whitespace, admin metadata, patient notice and hidden unverified instructions, login versioning, upload/extraction/source highlighting, migration approval/access revocation, and password-change session revocation. Desktop and 390px mobile captures were reviewed locally in `output/` (generated artifacts are not committed). No production deployment is claimed. Neon verification is recorded below.
-
-
-## Connected Neon development mode
-
-`npm run dev:neon` starts the persistent FastAPI app and frontend at http://127.0.0.1:5177. The persistent API uses port 8001, and VITE_API_PROXY_TARGET selects it. It reads the restricted pooled DATABASE_URL from backend/.env. It does not seed, migrate, reset passwords or connect the runtime with owner credentials. Stop other local Clyra servers first if ports 8001/5177 are occupied.
-
-The existing clyra-backend-dev branch was connected and checked on 5 November 2026: client TLS, clyra_app runtime role, append-only event privileges and Alembic 0003. Existing credentials were recovered through read-only Neon management requests; no role/password rotation was performed. The management key remains in .env.neon and is never loaded by FastAPI. The direct owner URL is isolated in backend/.env.migrations.
-
-Existing application logins use Member 2's development passwords, not the mock password. The supplied private backend/.env.development-logins is used for signed-in live checks. Run npm run dev:mock for demo passwords, or npm run dev:integrated for the isolated temporary database.
-
-The browser source-upload test requires the isolated API marker and skips against persistent Neon to avoid modifying shared records. Management connection recovery is `python -m scripts.connect_existing_neon` from backend; read-only checks are `python -m scripts.check_neon_connection`. Both withhold secret values.
-
-Live Neon checks passed on 5 November 2026: TLS, restricted runtime role, append-only event privileges, medication immutability, HTTP login, tenant isolation, patient-view notice and transactional audit rollback. The rollback test left the patient record unchanged. Existing login passwords were preserved.
-
-Signed-in Neon browser checks also passed for dr.north, admin.north and alex.example. The platform-owner login succeeded with its initial password-change gate preserved. These checks signed out afterward and did not change passwords or clinical records.
+- `frontend/`: React interface, API client, telemetry UI, and mock mode.
+- `backend/app/`: FastAPI application and database models.
+- `backend/alembic/`: existing schema migrations, retained for maintenance; do not run them during new-PC setup against the shared database.
+- `backend/scripts/`: launch support, fixtures, and maintenance tools.
+- `scripts/dev-integrated.mjs`: starts both services in Neon or isolated mode.
+- `fixtures/`: synthetic shared application data and telemetry examples.
+- `contract/`: API contract and integration documentation.

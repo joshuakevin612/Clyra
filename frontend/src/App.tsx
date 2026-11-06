@@ -1,4 +1,7 @@
 import { sourceParts } from "./api/source";
+import { Observations } from "./telemetry/Observations";
+import { WelcomeSequence } from "./experience/WelcomeSequence";
+import { WorkspaceMotion } from "./experience/WorkspaceMotion";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent, ReactNode } from "react";
 import {
@@ -11,6 +14,8 @@ import {
   FileClock,
   RefreshCw,
   Leaf,
+  FileText,
+  Activity,
 } from "lucide-react";
 import {
   ApiError,
@@ -157,6 +162,10 @@ export default function App() {
   const [page, setPage] = useState("");
   const [error, setError] = useState<unknown>();
   const [patient, setPatient] = useState<PatientOutput | null>(null);
+  const pageHeading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => {
+    pageHeading.current?.focus();
+  }, [page, patient?.id, user?.id]);
   useEffect(() => {
     const end = () => {
       setUser(null);
@@ -206,12 +215,16 @@ export default function App() {
   if (!user)
     return (
       <div className="entry">
+        <WelcomeSequence />
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
         <div className="entry-story">
           <a className="brand" href="/" aria-label="Clyra home">
             <Leaf />
             clyra<span>Medication continuity</span>
           </a>
-          <div>
+          <div className="entry-narrative">
             <h1>
               A clearer record.
               <br />A considered handover.
@@ -220,20 +233,32 @@ export default function App() {
               Keep the source in sight, review differences, and carry the record
               forward.
             </p>
-            <div className="record-line">
-              <span>Source record</span>
-              <ChevronRight />
-              <span>Clinical review</span>
-              <ChevronRight />
-              <span>Handover</span>
-            </div>
+            <ol className="record-line" aria-label="The review workflow">
+              <li>
+                <FileText aria-hidden="true" />
+                <span>Source record</span>
+              </li>
+              <li>
+                <Activity aria-hidden="true" />
+                <span>Clinical review</span>
+              </li>
+              <li>
+                <ArrowRight aria-hidden="true" />
+                <span>Handover</span>
+              </li>
+            </ol>
           </div>
           <footer>
             Synthetic data only. Clinical decisions belong to qualified
             healthcare professionals.
           </footer>
         </div>
-        <main className="entry-form">
+        <main
+          className="entry-form"
+          id="main-content"
+          tabIndex={-1}
+          aria-label="Sign in or create a patient login"
+        >
           <div className="form-wrap">
             <ShieldCheck size={30} />
             <h2>{signup ? "Create your patient login" : "Welcome to Clyra"}</h2>
@@ -317,7 +342,7 @@ export default function App() {
     );
   if (user.mustChangePassword)
     return (
-      <main className="password">
+      <main className="password" id="main-content" tabIndex={-1}>
         <h1>Choose a new password</h1>
         <p>You need to change your password before opening your workspace.</p>
         <Fields
@@ -337,6 +362,11 @@ export default function App() {
     );
   return (
     <div className="workspace">
+      <WorkspaceMotion />
+      <div className="reading-progress" aria-hidden="true" />
+      <a className="skip-link" href="#main-content">
+        Skip to main content
+      </a>
       <aside className="rail">
         <a className="brand" href="/" aria-label="Clyra home">
           <Leaf />
@@ -356,6 +386,7 @@ export default function App() {
             <button
               key={p}
               className={active === p ? "selected" : ""}
+              aria-current={active === p ? "page" : undefined}
               onClick={() => {
                 setPage(p);
                 setPatient(null);
@@ -374,7 +405,7 @@ export default function App() {
           ))}
         </nav>
         <div className="rail-bottom">
-          <span className="avatar">{user.displayName[0]}</span>
+            <span className="avatar">{user.displayName[0]}</span>
           <strong>{user.displayName}</strong>
           <small>{user.role.replaceAll("_", " ")}</small>
           <button onClick={logout}>
@@ -383,7 +414,7 @@ export default function App() {
           </button>
         </div>
       </aside>
-      <main className="main">
+      <main className="main" id="main-content" tabIndex={-1}>
         <header className="topbar">
           <span>
             {user.orgId === "org_north"
@@ -398,7 +429,7 @@ export default function App() {
           </span>
         </header>
         <div className="content">
-          <div className="breadcrumb">
+          <nav className="breadcrumb" aria-label="Breadcrumb">
             Workspace
             <ChevronRight size={14} />
             {active}
@@ -408,10 +439,12 @@ export default function App() {
                 {patient.displayName}
               </>
             )}
-          </div>
+          </nav>
           <header className="page-heading">
             <div>
-              <h1>{patient ? patient.displayName : active}</h1>
+              <h1 ref={pageHeading} tabIndex={-1}>
+                {patient ? patient.displayName : active}
+              </h1>
               <p>
                 {patient
                   ? `${patient.id} · Born ${patient.dateOfBirth}`
@@ -555,14 +588,21 @@ function Resource({
         <Empty>Records will appear here when available.</Empty>
       ) : (
         !error && (
-          <div className="table-wrap">
+          <div
+            className="table-wrap"
+            role="region"
+            aria-label="Records table, scroll horizontally for all columns"
+            tabIndex={0}
+          >
             <table>
               <thead>
                 <tr>
                   {columns.map((c) => (
-                    <th key={c}>{c.replace(/([A-Z])/g, " $1")}</th>
+                    <th key={c} scope="col">
+                      {c.replace(/([A-Z])/g, " $1")}
+                    </th>
                   ))}
-                  {onSelect && <th>Open</th>}
+                  {onSelect && <th scope="col">Open</th>}
                 </tr>
               </thead>
               <tbody>
@@ -922,6 +962,7 @@ function PatientWorkspace({
             "Comparison",
             "Discrepancies",
             "Documents",
+            "Observations",
             "Migrations",
             "Access grants",
             "Patient login",
@@ -929,6 +970,7 @@ function PatientWorkspace({
           ].map((t) => (
             <button
               className={tab === t ? "selected" : ""}
+              aria-current={tab === t ? "page" : undefined}
               onClick={() => setTab(t)}
               key={t}
             >
@@ -937,7 +979,9 @@ function PatientWorkspace({
           ))}
         </nav>
       )}
-      {tab === "Medication timeline" ? (
+      {tab === "Observations" && clinician ? (
+        <Observations key={id} patientId={id} write={write} />
+      ) : tab === "Medication timeline" ? (
         <section className="panel">
           <h2>Medication timeline</h2>
           <p>

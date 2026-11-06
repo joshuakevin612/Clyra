@@ -1,0 +1,17 @@
+SYN-RX-V1
+medicineName: Synthetic Sample 1
+strength: 5 MG
+form: TABLET
+instructionText: Synthetic demonstration record only. No treatment instruction.
+startDate: 2026-10-01
+endDate: null
+prescriberName: Dr Ethan Brooks (synthetic)
+---
+medicineName: Synthetic Sample 2
+strength: 10 MG
+form: TABLET
+instructionText: Synthetic demonstration record only. No treatment instruction.
+startDate: 2026-10-01
+endDate: null
+prescriberName: Dr Ethan Brooks (synthetic)
+---

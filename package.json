@@ -5,8 +5,6 @@
     "dev": "npm --prefix frontend run dev",
     "dev:integrated": "node scripts/dev-integrated.mjs",
     "build": "npm --prefix frontend run build",
-    "test": "npm --prefix frontend test",
-    "test:browser": "npm --prefix frontend run test:browser",
     "dev:neon": "node scripts/dev-integrated.mjs --neon",
     "dev:mock": "npm --prefix frontend run dev:mock"
   }

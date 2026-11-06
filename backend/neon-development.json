@@ -6,7 +6,7 @@
   "database": "clyra",
   "region": "aws-ap-southeast-1",
   "runtimeRole": "clyra_app",
-  "migrationRevision": "0003",
+  "migrationRevision": "0004",
   "verificationDate": "2026-11-05",
   "verifiedChecks": [
     "client TLS",
@@ -16,7 +16,11 @@
     "HTTP login",
     "tenant isolation",
     "patient view",
-    "audit rollback"
+    "audit rollback",
+    "telemetry runtime grants and immutable observations",
+    "telemetry concurrent create/ingest/stop",
+    "telemetry audit rollback",
+    "telemetry preserves patient, visit, medication and grant records"
   ],
   "frontendConnected": true,
   "localFrontendOrigin": "http://127.0.0.1:5177",

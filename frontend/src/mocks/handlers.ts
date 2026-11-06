@@ -1,5 +1,14 @@
 import { http, HttpResponse } from "msw";
-import fixture from "../../../fixtures/data.json";
+import { telemetryMock } from "./telemetry";
+import originalFixture from "../../../fixtures/data.json";
+import meadowbrook from "../../../fixtures/meadowbrook.json";
+const fixture = {
+  organisations: [...originalFixture.organisations, ...meadowbrook.organisations],
+  users: [...originalFixture.users, ...meadowbrook.users],
+  patients: [...originalFixture.patients, ...meadowbrook.patients],
+  visits: [...originalFixture.visits, ...meadowbrook.visits],
+  documents: [...originalFixture.documents, ...meadowbrook.documents],
+};
 import expected from "../../../fixtures/expected/discrepancies.json";
 import type * as G from "../api/generated";
 const rawFiles = import.meta.glob("../../../fixtures/documents/*.txt", {
@@ -155,7 +164,7 @@ const orgs: G.OrganisationOutput[] = fixture.organisations.map((o) => ({
 const patients: G.PatientOutput[] = fixture.patients.map((p) => ({
   ...p,
   version: 1,
-  linkedUserId: p.id === "pat_001" ? "usr_alex" : null,
+  linkedUserId: p.id === "pat_001" ? "usr_alex" : meadowbrook.patients.find(m => m.id === p.id)?.linkedUserId ?? null,
 }));
 const visits: G.VisitOutput[] = fixture.visits.map((v) => ({
   ...v,
@@ -481,6 +490,15 @@ export const handlers = [
       }
       if (u.mustChangePassword)
         fail("FORBIDDEN", 403, "Change your password first.");
+      const telemetry = path.match(/^\/patients\/([^/]+)\/telemetry(\/.*)$/);
+      if (telemetry) {
+        requireRole(u, "CLINICIAN");
+        patient(u, telemetry[1], method !== "GET", true);
+        const result = telemetryMock(telemetry[1], u.id, telemetry[2], method, body, url, fail);
+        if (result.action) log(u, result.action, result.targetId, telemetry[1]);
+        if (method === "GET") read(u, "TELEMETRY", result.targetId, telemetry[1]);
+        return json(result.value, result.status);
+      }
       if (path === "/organisations") {
         requireRole(u, "PATIENT", "CLINICIAN");
         return json(
