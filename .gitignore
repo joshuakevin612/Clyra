@@ -23,11 +23,3 @@ tmp/
 
 output/
 member2contracts/
-
-# Source distribution excludes environment files and tests.
-.env*
-**/.env*
-**/tests/
-**/e2e/
-**/*.test.*
-**/*.spec.*

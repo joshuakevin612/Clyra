@@ -62,9 +62,11 @@ export function ContinuityRibbon({ compact = false }: { compact?: boolean }) {
         });
         context!.closePath();
         // Lighting belongs to the geometric ribbon, never to text or chart data.
-        const level = 16 + face.light * 43;
-        context!.fillStyle = `hsl(168 48% ${level}%)`;
-        context!.strokeStyle = `hsl(168 48% ${level}%)`;
+        // Midnight-blue shadow to aurum highlight, mixed in RGB so the mid-tones stay warm.
+        const t = Math.pow(Math.min(1, face.light), 1.35);
+        const color = `rgb(${Math.round(18 + t * 222)} ${Math.round(26 + t * 168)} ${Math.round(64 + t * 28)})`;
+        context!.fillStyle = color;
+        context!.strokeStyle = color;
         context!.lineWidth = 0.6;
         context!.fill(); context!.stroke();
       }

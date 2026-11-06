@@ -13,6 +13,7 @@ import '@fontsource/barlow-condensed/600.css';
 import '@fontsource/barlow-condensed/700.css';
 import './experience/cinema.css';
 import './experience/flow.css';
+import './experience/aurum.css';
 async function start(){
  if(mockMode){const {worker}=await import('./mocks/browser');await worker.start({onUnhandledRequest:'bypass'});}
  ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><ExperienceProvider><App/></ExperienceProvider></React.StrictMode>);

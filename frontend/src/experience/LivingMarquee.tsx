@@ -11,7 +11,8 @@ export function LivingMarquee() {
     observer.observe(target); document.addEventListener("visibilitychange", sync);
     return () => { observer.disconnect(); document.removeEventListener("visibilitychange", sync); };
   }, []);
-  return <div ref={element} className="flow-marquee" aria-hidden="true" data-paused="true"><div>
-    {[0, 1].map(n => <span key={n}>SOURCE <i /> REVIEW <i /> RELAY <i /> CONTEXT <i /></span>)}
-  </div></div>;
+  return <div ref={element} className="flow-marquee" aria-hidden="true" data-paused="true">
+    <div data-row="forward">{[0, 1].map(n => <span key={n}>SOURCE <i /> REVIEW <i /> RELAY <i /> CONTEXT <i /></span>)}</div>
+    <div data-row="reverse">{[0, 1].map(n => <span key={n}>EVIDENCE <i /> TRACE <i /> HANDOVER <i /> CARE <i /></span>)}</div>
+  </div>;
 }
