@@ -941,6 +941,6 @@
         "explanation": "DELAYED: receipt at 2026-11-05T00:00:28.000000Z followed measurement at 2026-11-05T00:00:20.000000Z by 8 seconds (>5); timing alone does not establish a failure."
       }
     ],
-    "summary": "Synthetic data. Session ACTIVE; snapshot 2026-11-05T00:00:28.000000Z. SENSOR_A: STALE, 78 BPM, measured 2026-11-05T00:00:20.000000Z, flags MISSING, DELAYED. SENSOR_B: STALE, 79 BPM, measured 2026-11-05T00:00:20.000000Z, flags MISSING. Finding counts: MISSING=2, SPIKE=0, REPEATED=0, FLUCTUATION=0, DELAYED=11, CONFLICT=0. Flags indicate data-quality concerns, not diagnosis. Absence of flags does not prove reliability."
+    "summary": "Synthetic data. Session active.\nReport captured: 5 Nov 2026 at 00:00:28 UTC\n\nSynthetic sensor A\nLast reading: 78 BPM\nMeasured: 5 Nov 2026 at 00:00:20 UTC\nStatus: No recent readings\nData-quality flags: Missing readings, Delayed readings\n\nSynthetic sensor B\nLast reading: 79 BPM\nMeasured: 5 Nov 2026 at 00:00:20 UTC\nStatus: No recent readings\nData-quality flags: Missing readings\n\n13 data-quality findings in this session.\nMissing readings: 2\nSudden spikes: 0\nRepeated values: 0\nFluctuating values: 0\nDelayed readings: 11\nSource disagreements: 0\n\nHow to interpret this report\nFlags highlight possible data-quality concerns, not a diagnosis. No flags does not guarantee reliable readings."
   }
 }

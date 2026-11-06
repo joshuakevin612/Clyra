@@ -6,7 +6,42 @@ from app import core
 from app.db import TelemetrySession, TelemetryObservation, Patient, Grant, Audit, Access, User
 from app.telemetry_engine import instant, iso
 from app.telemetry_schemas import TelemetrySnapshot
-from .test_api import code
+import os
+os.environ.setdefault('ENVIRONMENT','test')
+from fastapi.testclient import TestClient
+from app.db import make_engine, factory, Base
+from app.main import create_app
+from scripts.seed import seed
+
+PASSWORD='Synthetic-test-password!'
+
+@pytest.fixture
+def setup():
+    """Isolated in-memory SQLite app (no database credentials, never Neon)."""
+    engine=make_engine('sqlite://')
+    Base.metadata.create_all(engine)
+    sessions=factory(engine)
+    with sessions.begin() as db:
+        seed(db,PASSWORD)
+    app=create_app(engine)
+    app.state.sessions=sessions
+    with TestClient(app,raise_server_exceptions=False) as client:
+        yield client,sessions
+    engine.dispose()
+
+@pytest.fixture
+def login(setup):
+    client,_=setup
+    def authenticate(username):
+        response=client.post('/api/v1/auth/login',json={'username':username,'password':PASSWORD})
+        assert response.status_code==200,response.text
+        return {'Authorization':'Bearer '+response.json()['accessToken']}
+    return authenticate
+
+def code(response, status, expected):
+    assert response.status_code==status,response.text
+    assert response.json()['error']['code']==expected
+    assert set(response.json()['error'])=={'code','message','details'}
 
 BASE='/api/v1/patients/pat_001/telemetry'
 

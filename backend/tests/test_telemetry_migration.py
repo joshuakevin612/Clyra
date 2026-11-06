@@ -25,5 +25,5 @@ def test_upgrade_from_0003_preserves_existing_records(tmp_path, monkeypatch):
     assert {'uq_telemetry_creation','uq_telemetry_event','ix_telemetry_measurement','ix_telemetry_patient_started'} <= indexes
     with engine.connect() as db:
         assert db.execute(text("SELECT version FROM organisations WHERE id='org_keep'")).scalar()==7
-        assert db.execute(text('SELECT version_num FROM alembic_version')).scalar()=='0004'
+        assert db.execute(text('SELECT version_num FROM alembic_version')).scalar()=='0005'
     engine.dispose()

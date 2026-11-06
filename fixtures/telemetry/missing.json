@@ -628,6 +628,6 @@
         "explanation": "MISSING: SENSOR_A has no non-delayed measurement within six seconds of 2026-11-05T00:00:20.000000Z; source freshness is uncertain."
       }
     ],
-    "summary": "Synthetic data. Session ACTIVE; snapshot 2026-11-05T00:00:20.000000Z. SENSOR_A: STALE, 78 BPM, measured 2026-11-05T00:00:10.000000Z, flags MISSING. SENSOR_B: CURRENT, 79 BPM, measured 2026-11-05T00:00:20.000000Z, flags none. Finding counts: MISSING=1, SPIKE=0, REPEATED=0, FLUCTUATION=0, DELAYED=0, CONFLICT=0. Flags indicate data-quality concerns, not diagnosis. Absence of flags does not prove reliability."
+    "summary": "Synthetic data. Session active.\nReport captured: 5 Nov 2026 at 00:00:20 UTC\n\nSynthetic sensor A\nLast reading: 78 BPM\nMeasured: 5 Nov 2026 at 00:00:10 UTC\nStatus: No recent readings\nData-quality flags: Missing readings\n\nSynthetic sensor B\nLast reading: 79 BPM\nMeasured: 5 Nov 2026 at 00:00:20 UTC\nStatus: Current\nData-quality flags: None\n\n1 data-quality finding in this session.\nMissing readings: 1\nSudden spikes: 0\nRepeated values: 0\nFluctuating values: 0\nDelayed readings: 0\nSource disagreements: 0\n\nHow to interpret this report\nFlags highlight possible data-quality concerns, not a diagnosis. No flags does not guarantee reliable readings."
   }
 }

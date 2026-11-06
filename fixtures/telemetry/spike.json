@@ -760,6 +760,6 @@
         "explanation": "CONFLICT: SENSOR_A 180 BPM at 2026-11-05T00:00:20.000000Z; SENSOR_B 79 BPM at 2026-11-05T00:00:20.000000Z; difference >15 BPM within two seconds. Neither source is selected as correct."
       }
     ],
-    "summary": "Synthetic data. Session ACTIVE; snapshot 2026-11-05T00:00:20.000000Z. SENSOR_A: SUSPECT, 180 BPM, measured 2026-11-05T00:00:20.000000Z, flags SPIKE, CONFLICT. SENSOR_B: SUSPECT, 79 BPM, measured 2026-11-05T00:00:20.000000Z, flags CONFLICT. Finding counts: MISSING=0, SPIKE=1, REPEATED=0, FLUCTUATION=0, DELAYED=0, CONFLICT=1. Flags indicate data-quality concerns, not diagnosis. Absence of flags does not prove reliability."
+    "summary": "Synthetic data. Session active.\nReport captured: 5 Nov 2026 at 00:00:20 UTC\n\nSynthetic sensor A\nLast reading: 180 BPM\nMeasured: 5 Nov 2026 at 00:00:20 UTC\nStatus: Flagged for review\nData-quality flags: Sudden spikes, Source disagreements\n\nSynthetic sensor B\nLast reading: 79 BPM\nMeasured: 5 Nov 2026 at 00:00:20 UTC\nStatus: Flagged for review\nData-quality flags: Source disagreements\n\n2 data-quality findings in this session.\nMissing readings: 0\nSudden spikes: 1\nRepeated values: 0\nFluctuating values: 0\nDelayed readings: 0\nSource disagreements: 1\n\nHow to interpret this report\nFlags highlight possible data-quality concerns, not a diagnosis. No flags does not guarantee reliable readings."
   }
 }
