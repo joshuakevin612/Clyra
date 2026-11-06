@@ -4,9 +4,15 @@ Medication continuity and safe handover. Synthetic development data only.
 
 React/Vite frontend (`frontend/`) and FastAPI backend (`backend/`).
 
+Member 2 Stage 1: [EI-1.0](contract/EXTERNAL_EVIDENCE_IMPORT_EI_1_0.md),
+[integration](docs/INTEGRATION.md), [handoff](DEPLOYMENT_HANDOFF.md),
+[verification report](MEMBER_2_STAGE_1_REPORT.md). Member 1 owns Stage 2 deployment
+after all Stage 1 gates pass.
+
 ## Run
 
-Requirements: Node.js 22.12+, Python 3.11, Git.
+Requirements: Node.js 22.12+, Python 3.14 for the deployment runtime, Git.
+The backend is also tested on the existing Python 3.11 development environment.
 
 ```powershell
 git clone https://github.com/joshuakevin612/Clyra.git

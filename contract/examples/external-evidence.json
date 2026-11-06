@@ -1,0 +1,21 @@
+{
+  "contractVersion": "EI-1.0",
+  "syntheticOnly": true,
+  "stageMultipart": {
+    "patientId": "pat_001",
+    "sourceLabel": "Synthetic external pharmacy",
+    "visitDate": "2026-11-06",
+    "requestId": "f04d876d-fb45-4b09-93ba-e27a2ad7258d",
+    "file": "fixtures/documents/doc_001a.txt"
+  },
+  "confirmJson": {
+    "ifVersion": 1,
+    "patientId": "pat_001",
+    "patientIfVersion": 1,
+    "confirmAssociation": true
+  },
+  "versionConflict": {
+    "error": {"code": "VERSION_CONFLICT", "message": "Version conflict.", "details": []}
+  },
+  "note": "Use live IDs and fresh patient/import versions. Tokens are never fixture values."
+}

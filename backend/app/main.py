@@ -23,6 +23,20 @@ def create_app(engine=None):
         yield
 
     app = FastAPI(title='Medication Continuity API', version='1.3.1', lifespan=lifespan)
+    app.openapi_tags = [{'name':'External evidence EI-1.0',
+        'description':'Synthetic source staging and explicit patient association. See contract/EXTERNAL_EVIDENCE_IMPORT_EI_1_0.md.'}]
+    @app.middleware('http')
+    async def private_responses(request, call_next):
+        response = await call_next(request)
+        response.headers['Cache-Control'] = 'no-store, private'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        return response
+
+    @app.get('/health', include_in_schema=False)
+    def health():
+        # Liveness only. Authenticated smoke checks verify database readiness.
+        return {'status': 'ok'}
     origins=[value.strip() for value in os.getenv('CORS_ORIGINS','').split(',') if value.strip()]
     if origins:
         if '*' in origins:
@@ -44,7 +58,8 @@ def create_app(engine=None):
         return JSONResponse(ApiError('NOT_FOUND' if exc.status_code == 404 else 'VALIDATION_FAILED', exc.status_code).body, status_code=exc.status_code)
     @app.exception_handler(Exception)
     async def internal(request, exc):
-        return JSONResponse(ApiError('INTERNAL_ERROR', 500).body, status_code=500)
+        return JSONResponse(ApiError('INTERNAL_ERROR', 500).body, status_code=500,
+                            headers={'Cache-Control':'no-store, private','Pragma':'no-cache','X-Content-Type-Options':'nosniff'})
     app.include_router(router, prefix='/api/v1')
     return app
 
@@ -63,7 +78,9 @@ class TransactionRoute(APIRoute):
                     raise
         return transactional
 
-router = APIRouter(route_class=TransactionRoute, responses={status: {'model': ErrorOutput} for status in (400,401,403,404,409,422,429,500)})
+router = APIRouter(route_class=TransactionRoute, responses={status: {
+    'model': ErrorOutput, **({'description':'Validation failed'} if status==422 else {})
+} for status in (400,401,403,404,409,422,429,500)})
 
 @router.post('/auth/login', response_model=LoginOutput, response_model_exclude_unset=True)
 def login(body: LoginBody, db=Depends(db_session, scope='function')):
@@ -685,5 +702,8 @@ def grant_access(patientId: str, orgId: str, body: GrantBody, u=Depends(current_
 
 from .telemetry_api import register as register_telemetry
 register_telemetry(router)
+
+from .external_evidence import register as register_external_evidence
+register_external_evidence(router)
 
 app=create_app()

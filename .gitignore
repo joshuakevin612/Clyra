@@ -9,6 +9,7 @@ __pycache__/
 .env.*
 !.env.example
 !.env.migrations.example
+!.env.operations.example
 
 node_modules/
 dist/
@@ -22,4 +23,8 @@ tmp/
 **/tsconfig.tsbuildinfo
 
 output/
+*.dump.age
+*.dump.age.json
+*.dump.age.partial
+*.agekey
 member2contracts/

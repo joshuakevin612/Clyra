@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine, String, Integer, JSON, ForeignKey, Index, text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 from sqlalchemy.pool import StaticPool
+from sqlalchemy.engine import make_url
 
 load_dotenv(Path(__file__).resolve().parents[1] / '.env')
 
@@ -57,6 +58,15 @@ class Document(PatientRecord, Base):
 
 class Job(PatientRecord, Base):
     __tablename__ = 'extraction_jobs'
+
+class ExternalImport(PatientRecord, Base):
+    __tablename__ = 'external_imports'
+    request_id: Mapped[str] = mapped_column(String(36))
+    content_hash: Mapped[str] = mapped_column(String(64))
+    __table_args__ = (
+        Index('uq_external_import_request', 'org_id', 'request_id', unique=True),
+        Index('uq_external_import_content', 'org_id', 'patient_id', 'content_hash', unique=True),
+    )
 
 class Medication(PatientRecord, Base):
     __tablename__ = 'medication_entries'
@@ -113,13 +123,25 @@ def make_engine(url=None):
         url = url.replace('postgres://', 'postgresql+psycopg://', 1)
     elif url.startswith('postgresql://'):
         url = url.replace('postgresql://', 'postgresql+psycopg://', 1)
-    if not url.startswith('sqlite') and 'sslmode=require' not in url and 'sslmode=verify-full' not in url:
+    parsed = make_url(url)
+    if not url.startswith('sqlite') and parsed.query.get('sslmode') not in ('require', 'verify-full'):
         raise RuntimeError('DATABASE_URL must require PostgreSQL SSL.')
     if url.startswith('sqlite'):
         if os.getenv('ENVIRONMENT') != 'test':
             raise RuntimeError('SQLite is allowed only in tests.')
         return create_engine(url, connect_args={'check_same_thread': False}, poolclass=StaticPool)
-    return create_engine(url, pool_pre_ping=True, connect_args={'connect_timeout':15})
+    if parsed.drivername != 'postgresql+psycopg':
+        raise RuntimeError('Use PostgreSQL with the psycopg driver.')
+    if os.getenv('ENVIRONMENT', '').lower() == 'production':
+        if '-pooler.' not in (parsed.host or ''):
+            raise RuntimeError('Production runtime requires a pooled Neon connection.')
+        if parsed.username != os.getenv('APPLICATION_DB_ROLE', 'clyra_app'):
+            raise RuntimeError('Production runtime requires APPLICATION_DB_ROLE credentials.')
+    return create_engine(url, pool_pre_ping=True,
+                         pool_size=int(os.getenv('DB_POOL_SIZE', '2')),
+                         max_overflow=int(os.getenv('DB_MAX_OVERFLOW', '0')),
+                         pool_timeout=10, pool_recycle=300,
+                         connect_args={'connect_timeout':15, 'prepare_threshold': None})
 
 def factory(engine):
     return sessionmaker(engine, expire_on_commit=False)
