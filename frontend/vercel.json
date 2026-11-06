@@ -4,7 +4,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/api/v1/:path*", "destination": "https://BACKEND_ORIGIN_PLACEHOLDER/api/v1/:path*" },
+    { "source": "/api/v1/:path*", "destination": "https://clyra-api.vercel.app/api/v1/:path*" },
     { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "headers": [

@@ -1,0 +1,15 @@
+.env
+.env.*
+**/.env
+**/.env.*
+backend/
+backend-source/
+tmp/
+output/
+member2contracts/
+**/node_modules/
+**/.venv/
+**/dist/
+**/test-results/
+**/.vercel/
+*.dump.age*
